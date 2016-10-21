@@ -44,10 +44,11 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th data-toggle="true">Institución</th>
-                                        <th data-hide="phone, tablet">Página</th>
-                                        <th data-hide="phone, tablet">Dirección</th>
-                                        <th data-hide="phone, tablet">Telefono</th>
+                                        <th data-toggle="true">Clave</th>
+                                        <th >Descripción</th>
+                                        <th >Tipo</th>
+                                        <th data-hide="phone, tablet">Presupuesto</th>
+                                        <th data-hide="phone, tablet">Concepto</th>
                                         <th style="width: 80px;"></th>
                                     </tr>
                                 </thead>
@@ -55,7 +56,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 text-xs-center">
                                             <div class="form-group">
-                                                <a href="<?=base_url('instituciones/agregar')?>" type="button" class="btn btn-default btn-rounded waves-effect waves-light">
+                                                <a href="<?=base_url('partidas/agregar')?>" type="button" class="btn btn-default btn-rounded waves-effect waves-light">
                                                     <span class="btn-label">
                                                         <i class="fa fa-plus m-r-5"></i>
                                                     </span>
@@ -65,12 +66,15 @@
                                         </div>
                                         <div class="col-sm-6 text-xs-center text-right">
                                             <div class="form-group">
-                                                <label class="control-label m-r-5">Filtrar</label>
+                                                <label class="control-label m-r-5">Filtrar por concepto</label>
                                                 <select id="demo-foo-filter-status" class="form-control">
-                                                    <option value="">Show all</option>
-                                                    <option value="active">Active</option>
-                                                    <option value="disabled">Disabled</option>
-                                                    <option value="suspended">Suspended</option>
+                                                    <option value="">Ver todo</option>
+                                                    <?php
+                                                    foreach ($conceptos as $key => $conceptos){
+                                                        echo '<option value="'.$conceptos->co_clave.'-'.$conceptos->co_descripcion.'">'.$conceptos->co_clave.'-'.$conceptos->co_descripcion.'</option>';
+                                                    }
+
+                                                    ?>
                                                 </select>
                                             </div>
                                             <div class="input-group">
@@ -85,17 +89,18 @@
                                 <tbody>
                                     <!-- Contenido de la tabla -->
                                     <?php
-                                    foreach ($instituciones as $key => $institucion) {
+                                    foreach ($partidas as $key => $partida) {
                                         echo "<tr>";
                                         echo "<td>".($key+1)."</td>";
-                                        echo "<td>".$institucion->in_nombre."</td>";
-                                        echo "<td>".$institucion->in_pagina."</td>";
-                                        echo "<td>".$institucion->in_direccion."</td>";
-                                        echo "<td>".$institucion->in_telefono."</td>";
+                                        echo "<td>".$partida->pa_clave."</td>";
+                                        echo "<td>".$partida->pa_descripcion."</td>";
+                                        echo "<td>".$partida->pa_tipo."</td>";
+                                        echo "<td>".$partida->pa_indicador."</td>";
+                                        echo "<td><a href='".base_url('conceptos/editar/'.$partida->co_id)."'>".$partida->co_clave."-".$partida->co_descripcion."</a></td>";
                                         echo '
                                         <td>
-                                            <a href="'.base_url('instituciones/editar/'.$institucion->in_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fa fa-pencil-square-o"></i></a>
-                                            <a href="'.base_url('instituciones/eliminar/'.$institucion->in_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Eliminar registro"><i class="fa fa-trash-o"></i></a>
+                                            <a href="'.base_url('partidas/editar/'.$partida->pa_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fa fa-pencil-square-o"></i></a>
+                                            <a href="'.base_url('partidas/eliminar/'.$partida->pa_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Eliminar registro"><i class="fa fa-trash-o"></i></a>
                                         </td>
                                         ';
                                         echo "</tr>";

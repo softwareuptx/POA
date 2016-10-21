@@ -714,7 +714,7 @@ if ( ! function_exists('set_select'))
 	 * @param	bool
 	 * @return	string
 	 */
-	function set_select($field, $value = '', $default = FALSE)
+	function set_select($field, $value = '', $default = FALSE,$id=NULL)
 	{
 		$CI =& get_instance();
 
@@ -724,7 +724,16 @@ if ( ! function_exists('set_select'))
 		}
 		elseif (($input = $CI->input->post($field, FALSE)) === NULL)
 		{
-			return ($default === TRUE) ? ' selected="selected"' : '';
+
+			if($id)
+			{
+				if($value==$id){
+					return ' selected="selected"';
+				}
+			}
+			else{
+				return ($default === TRUE) ? ' selected="selected"' : '';
+			}
 		}
 
 		$value = (string) $value;

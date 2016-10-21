@@ -44,10 +44,8 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th data-toggle="true">Institución</th>
-                                        <th data-hide="phone, tablet">Página</th>
-                                        <th data-hide="phone, tablet">Dirección</th>
-                                        <th data-hide="phone, tablet">Telefono</th>
+                                        <th data-toggle="true">Clave</th>
+                                        <th data-hide="phone, tablet">Descripción</th>
                                         <th style="width: 80px;"></th>
                                     </tr>
                                 </thead>
@@ -55,7 +53,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 text-xs-center">
                                             <div class="form-group">
-                                                <a href="<?=base_url('instituciones/agregar')?>" type="button" class="btn btn-default btn-rounded waves-effect waves-light">
+                                                <a href="<?=base_url('capitulos/agregar')?>" type="button" class="btn btn-default btn-rounded waves-effect waves-light">
                                                     <span class="btn-label">
                                                         <i class="fa fa-plus m-r-5"></i>
                                                     </span>
@@ -85,17 +83,15 @@
                                 <tbody>
                                     <!-- Contenido de la tabla -->
                                     <?php
-                                    foreach ($instituciones as $key => $institucion) {
+                                    foreach ($capitulos as $key => $capitulo) {
                                         echo "<tr>";
                                         echo "<td>".($key+1)."</td>";
-                                        echo "<td>".$institucion->in_nombre."</td>";
-                                        echo "<td>".$institucion->in_pagina."</td>";
-                                        echo "<td>".$institucion->in_direccion."</td>";
-                                        echo "<td>".$institucion->in_telefono."</td>";
+                                        echo "<td>".$capitulo->ca_clave."</td>";
+                                        echo "<td>".$capitulo->ca_descripcion."</td>";
                                         echo '
                                         <td>
-                                            <a href="'.base_url('instituciones/editar/'.$institucion->in_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fa fa-pencil-square-o"></i></a>
-                                            <a href="'.base_url('instituciones/eliminar/'.$institucion->in_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Eliminar registro"><i class="fa fa-trash-o"></i></a>
+                                            <a href="'.base_url('capitulos/editar/'.$capitulo->ca_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fa fa-pencil-square-o"></i></a>
+                                            <a href="'.base_url('capitulos/eliminar/'.$capitulo->ca_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Eliminar registro"><i class="fa fa-trash-o"></i></a>
                                         </td>
                                         ';
                                         echo "</tr>";

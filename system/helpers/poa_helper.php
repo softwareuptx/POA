@@ -44,12 +44,12 @@ if ( ! function_exists('user') )
 				switch ($usuario->u_admin)
 				{
 					case 1:
-						$usuario->perfil 	= 'ADMINISTRADOR';
-						break;
-				
+					$usuario->perfil 	= 'ADMINISTRADOR';
+					break;
+
 					default:
-						$usuario->perfil 	= 'EJECUTOR';
-						break;
+					$usuario->perfil 	= 'EJECUTOR';
+					break;
 				}
 
 				$usuario->logged = TRUE;
@@ -106,6 +106,128 @@ if ( ! function_exists('menu') )
 		}
 
 		return NULL;
+	}
+}
+// --------------------------------------------------------------------
+
+/**
+* Calcula el menu de navegacion
+*
+* @param 	String
+* @param 	Array
+* @return  	String
+*/
+if ( ! function_exists('navegacion') )
+{
+	function navegacion($titulo=NULL, $extra=array()){
+		
+		//Instaceamos las librerias
+		$CI = &get_instance();
+		$CI->load->helper('url');
+		
+		//Obtenes la clase a la cual se esta accesando
+		$controller 	= $CI->router->class;
+		//Obtenes el metodo la cual se esta accesando
+		$metodo 		= $CI->router->method;
+
+
+		$menu = '';
+
+		//Concatenamos el menu
+		$menu .= '
+		<div class="row">
+			<div class="col-sm-12">
+				';
+				if($titulo)
+				{
+					$menu .= '
+					<h4 class="page-title">'.$titulo.'</h4>';
+				}
+				else if($metodo!='index')
+				{
+					$menu .= '<h4 class="page-title">'.ucwords($metodo).' '.ucwords($controller).'</h4>';
+				}
+				else
+				{
+					$menu .= '<h4 class="page-title">'.ucwords($controller).'</h4>';
+				}
+
+				$menu .= '
+				<ol class="breadcrumb">
+					<li>
+						<a href="'.base_url().'">poa.uptlax</a>
+					</li>
+					';
+
+					if($metodo=='index'){
+
+						$menu .= '
+						<li class="active">
+							'.ucwords($controller).'
+						</li>
+						';
+					}
+					else
+					{
+						$menu .= '
+						<li>
+							<a href="'.base_url($controller).'">'.ucwords($controller).'</a>
+						</li>
+						<li class="active">
+							'.ucwords($metodo).'
+						</li>';
+					}
+
+					$menu .= '
+				</ol>
+			</div>
+		</div>
+		';
+
+
+		return $menu;
+	}
+}
+// --------------------------------------------------------------------
+
+/**
+* Calcula el titulo de la pagina
+*
+* @param 	String
+* @return  	String
+*/
+if ( ! function_exists('title') )
+{
+	function title($titulo=NULL){
+		
+		//Instaceamos las librerias
+		$CI = &get_instance();
+		$CI->load->helper('url');
+		
+		//Obtenes la clase a la cual se esta accesando
+		$controller 	= $CI->router->class;
+		//Obtenes el metodo la cual se esta accesando
+		$metodo 		= $CI->router->method;
+
+		$temp = 'POA | ';
+
+		if(!$titulo)
+		{	
+			if($metodo=='index')
+			{
+				$temp .= ucwords($controller);
+			}
+			else
+			{
+				$temp .= ucwords($metodo).' '.ucwords($controller);
+			}
+
+			$titulo = $temp;
+		}
+
+
+
+		return $titulo;
 	}
 }
 // --------------------------------------------------------------------

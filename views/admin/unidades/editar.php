@@ -85,9 +85,9 @@
                                 <div class="pull-left">
                                     <button type="submit" class="btn btn-default btn-rounded waves-effect waves-light">
                                         <span class="btn-label">
-                                            <i class="fa fa-refresh"></i>
+                                            <i class="fa fa-check"></i>
                                         </span>
-                                        Actualizar
+                                        Guardar
                                     </button>
                                 </div>
                             </div>

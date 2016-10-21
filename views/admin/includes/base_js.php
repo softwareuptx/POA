@@ -23,3 +23,6 @@
 		
 <!--FooTable Example-->
 <script src="<?=pages('jquery.footable.js')?>"></script>
+
+<script src="<?=plugins('bootstrap-select/dist/js/bootstrap-select.min.js')?>"></script>
+<script src="<?=plugins('autoNumeric/autoNumeric.js')?>"></script>

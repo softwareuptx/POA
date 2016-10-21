@@ -8,7 +8,7 @@
     <!-- ========== Icon  ========== -->
     <?=$this->load->view('includes/base_favicon','',TRUE)?>
     <!-- ========== /Icon  ========== -->
-    <title>Programacion Operativa Anual</title>
+    <title><?=title()?></title>
     <!-- ========== Base CSS ========== -->
     <?=$this->load->view('includes/base_css','',TRUE)?>
     <!-- ========== /Base CSS ========== -->

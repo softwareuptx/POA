@@ -2,23 +2,23 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Sistema de Programacion Operativa Anual (POA)
- * Controllers / Modulo Instituciones
+ * Controllers / Modulo Unidades
  *
- * Modulo CRUD para Instituciones 
+ * Modulo CRUD para Unidades 
  *
  * @author Oficina de Desarrollo de Software / Universidad Politecnica de Tlaxcala
  */
-class Instituciones extends CI_Controller
+class Unidades extends CI_Controller
 {
     /**
-     * Muestra el listado de instituciones
+     * Muestra el listado de unidades
      *
      * @return void
      */
     public function index()
     {
-        $data['instituciones'] = $this->minstituciones->listar();
-        $this->load->view('instituciones/listar',$data);
+        $data['unidades'] = $this->munidades->listar();
+        $this->load->view('unidades/listar',$data);
     }
     // --------------------------------------------------------------------
     
@@ -50,10 +50,10 @@ class Instituciones extends CI_Controller
                 );
 
             $this->minstituciones->agregar($data);
-            $this->alerts->success('instituciones');
+            $this->alerts->success('unidades');
         }
 
-        $this->load->view('instituciones/agregar');
+        $this->load->view('unidades/agregar');
     }
     // --------------------------------------------------------------------
     
@@ -70,7 +70,7 @@ class Instituciones extends CI_Controller
             $this->alerts->_403();
         //Validos la informacion
         if($this->minstituciones->validar($id))
-            $this->alerts->danger('instituciones',$this->alerts->db_404);
+            $this->alerts->danger('unidades',$this->alerts->db_404);
 
         // Validaciones de Formulario
         $this->form_validation->set_rules('nombre', 'Nombre de la institución', 'required');
@@ -93,12 +93,12 @@ class Instituciones extends CI_Controller
                 );
 
             $this->minstituciones->editar($id, $data);
-            $this->alerts->success('instituciones');
+            $this->alerts->success('unidades');
         }
 
         $data['institucion'] = $this->minstituciones->obtener($id);
 
-        $this->load->view('instituciones/editar',$data);
+        $this->load->view('unidades/editar',$data);
     }
     // --------------------------------------------------------------------
     
@@ -115,25 +115,25 @@ class Instituciones extends CI_Controller
             $this->alerts->_403();
         //Validos la informacion
         if($this->minstituciones->validar($id))
-            $this->alerts->danger('instituciones',$this->alerts->db_404);
+            $this->alerts->danger('unidades',$this->alerts->db_404);
 
         //Validamos si la operacion de realizo con éxito
         if($this->minstituciones->eliminar($id))
         {
             //si se realizo con exito mandamos mensaje satisfactorio
-            $this->alerts->success('instituciones');
+            $this->alerts->success('unidades');
         }
         else
         {
             //Comparamos el codigo de error de la base de datos
             if($this->db->error()['code']==1451)
-                $this->alerts->danger('instituciones',$this->alerts->db_nodelete);
+                $this->alerts->danger('unidades',$this->alerts->db_nodelete);
             else
-                $this->alerts->danger('instituciones',$this->alerts->db_error);
+                $this->alerts->danger('unidades',$this->alerts->db_error);
         }
     }
     // --------------------------------------------------------------------
 }
-/* Final del archivo Instituciones.php 
- * Ubicacion: ./app_admin/controllers/Instituciones.php
+/* Final del archivo Unidades.php 
+ * Ubicacion: ./app_admin/controllers/Unidades.php
  */

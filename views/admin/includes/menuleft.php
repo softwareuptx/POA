@@ -19,7 +19,16 @@
                     <a href="<?=base_url('instituciones')?>" class="waves-effect <?=menu('instituciones')?>"><i class="fa fa-institution"></i> <span>Instituciones</span></a>
                 </li>
                 <li>
-                <a href="<?=base_url('unidades')?>" class="waves-effect <?=menu('unidades')?>"><i class="fa fa-th-large"></i> <span>Unidades</span></a>
+                    <a href="<?=base_url('unidades')?>" class="waves-effect <?=menu('unidades')?>"><i class="fa fa-th-large"></i> <span>Unidades</span></a>
+                </li>
+                <li>
+                    <a href="<?=base_url('capitulos')?>" class="waves-effect <?=menu('capitulos')?>"><i class="fa fa-tags"></i> <span>Capitulos</span></a>
+                </li>
+                <li>
+                    <a href="<?=base_url('conceptos')?>" class="waves-effect <?=menu('conceptos')?>"><i class="fa fa-tag"></i> <span>Conceptos</span></a>
+                </li>
+                <li>
+                    <a href="<?=base_url('partidas')?>" class="waves-effect <?=menu('partidas')?>"><i class="fa fa-flag"></i> <span>Partidas</span></a>
                 </li>
             </ul>
             <div class="clearfix"></div>
