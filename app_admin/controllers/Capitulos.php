@@ -30,7 +30,7 @@ class Capitulos extends CI_Controller
     public function agregar()
     {
         // Validaciones de Formulario
-        $this->form_validation->set_rules('clave', 'Clave del capitulo', 'required|numeric|min_length[4]|max_length[4]');
+        $this->form_validation->set_rules('clave', 'Clave del capitulo', 'required|numeric|exact_length[4]|is_unique[Capitulos.ca_clave]');
         $this->form_validation->set_rules('descripcion', 'Descripcioón', 'required');
 
         if( $this->form_validation->run() && $this->input->post() )
@@ -62,11 +62,11 @@ class Capitulos extends CI_Controller
         if(!$id)
             $this->alerts->_403();
         //Validos la informacion
-        if($this->mcapitulos->validar($id))
+        if($this->mcapitulos->validar_id($id))
             $this->alerts->danger('capitulos',$this->alerts->db_404);
 
         // Validaciones de Formulario
-        $this->form_validation->set_rules('clave', 'Clave del capitulo', 'required|numeric|min_length[4]|max_length[4]');
+        $this->form_validation->set_rules('clave', 'Clave del capitulo', 'required|numeric|exact_length[4]');
         $this->form_validation->set_rules('descripcion', 'Descripcioón', 'required');
 
         if( $this->form_validation->run() && $this->input->post() )
@@ -99,7 +99,7 @@ class Capitulos extends CI_Controller
         if(!$id)
             $this->alerts->_403();
         //Validos la informacion
-        if($this->mcapitulos->validar($id))
+        if($this->mcapitulos->validar_id($id))
             $this->alerts->danger('capitulos',$this->alerts->db_404);
 
         //Validamos si la operacion de realizo con éxito
@@ -116,6 +116,23 @@ class Capitulos extends CI_Controller
             else
                 $this->alerts->danger('capitulos',$this->alerts->db_error);
         }
+    }
+    // --------------------------------------------------------------------
+    
+    /**
+     * Valida si clave es unica
+     *
+     * @param   Int
+     * @return  boolean
+     */
+    public function validarclave($clave)
+    {
+        if($this->mcapitulos->validar_clave($clave))
+        {
+            $this->form_validation->set_message('validarclave', 'Clave de capítulo ya registrada, escriba otra por favor');
+            return FALSE;
+        }
+        return TRUE; 
     }
     // --------------------------------------------------------------------
 }

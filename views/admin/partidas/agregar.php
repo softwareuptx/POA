@@ -73,7 +73,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="indicador">Presupuesto autorizado</label>
-                                        <input type="text" class="form-control" id="indicador" name="indicador" placeholder="$ " value="<?=set_value('indicador')?>">
+                                        <input type="text" class="form-control cantidad" id="indicador" name="indicador" placeholder="$ " data-a-sign="$ " value="<?=set_value('indicador')?>">
                                         <?=form_error('indicador')?>
                                     </div>
                                     <div class="form-group">

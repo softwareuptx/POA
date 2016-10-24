@@ -62,15 +62,6 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-6 text-xs-center text-right">
-                                            <div class="form-group">
-                                                <label class="control-label m-r-5">Filtrar</label>
-                                                <select id="demo-foo-filter-status" class="form-control">
-                                                    <option value="">Show all</option>
-                                                    <option value="active">Active</option>
-                                                    <option value="disabled">Disabled</option>
-                                                    <option value="suspended">Suspended</option>
-                                                </select>
-                                            </div>
                                             <div class="input-group">
                                                 <input type="text" id="demo-foo-search" name="example-input1-group2" class="form-control" placeholder="Buscar">
                                                 <span class="input-group-btn">
@@ -86,7 +77,7 @@
                                     foreach ($capitulos as $key => $capitulo) {
                                         echo "<tr>";
                                         echo "<td>".($key+1)."</td>";
-                                        echo "<td>".$capitulo->ca_clave."</td>";
+                                        echo "<td><strong>".$capitulo->ca_clave."</strong></td>";
                                         echo "<td>".$capitulo->ca_descripcion."</td>";
                                         echo '
                                         <td>

@@ -58,7 +58,7 @@ class Login extends CI_Controller
      */
     public function valperiodo($periodo_id)
     {
-        if($this->mperiodo->check($periodo_id)<1)
+        if($this->mperiodo->validar($periodo_id))
         {
             $this->form_validation->set_message('valperiodo', 'Seleccione un periodo valido');
             return FALSE;

@@ -73,7 +73,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                     <label for="indicador">Presupuesto autorizado</label>
-                                        <input type="text" class="form-control" id="indicador" name="indicador" value="<?php if(set_value('indicador')==''){ echo $partida->pa_indicador; }else{ echo set_value('indicador'); } ?>">
+                                        <input type="text" class="form-control cantidad" id="indicador" name="indicador" placeholder="$ " data-a-sign="$ " value="<?php if(set_value('indicador')==''){ echo $partida->pa_indicador; }else{ echo set_value('indicador'); } ?>">
                                         <?=form_error('indicador')?>
                                     </div>
                                     <div class="form-group">
@@ -113,10 +113,13 @@
     <!-- ========== End Footer ========== -->
 </div>
 <!-- END wrapper -->
-<script>
-    var resizefunc = [];
-</script>
 <!-- ========== Base JS ========== -->
 <?=$this->load->view('includes/base_js','',TRUE)?>
+<script>
+    var resizefunc = [];
+    jQuery(function($) {
+        $('.cantidad').autoNumeric('init');    
+    });
+</script>
 </body>
 </html>

@@ -31,16 +31,12 @@ class Conceptos extends CI_Controller
     public function agregar()
     {
         // Validaciones de Formulario
-        $this->form_validation->set_rules('clave', 'Clave del concepto', 'required|numeric|min_length[4]|max_length[4]');
+        $this->form_validation->set_rules('clave', 'Clave del concepto', 'required|numeric|exact_length[4]|is_unique[Conceptos.co_clave]');
         $this->form_validation->set_rules('descripcion', 'Descripcioón', 'required');
-        $this->form_validation->set_rules('capitulo', 'Capitulo', 'required|numeric');
+        $this->form_validation->set_rules('capitulo', 'Capitulo', 'required|numeric|callback_validarcapitulo');
 
         if( $this->form_validation->run() && $this->input->post() )
         {
-            //Validos el capitulo
-            if($this->mcapitulos->validar($this->input->post('capitulo',TRUE)))
-                $this->alerts->danger('conceptos',$this->alerts->db_404);
-
             //Preparamos la información para insertar
             $data = array(
                 'co_clave'          => $this->input->post('clave',TRUE),
@@ -70,20 +66,16 @@ class Conceptos extends CI_Controller
         if(!$id)
             $this->alerts->_403();
         //Validos la informacion
-        if($this->mconceptos->validar($id))
+        if($this->mconceptos->validar_id($id))
             $this->alerts->danger('conceptos',$this->alerts->db_404);
 
         // Validaciones de Formulario
-        $this->form_validation->set_rules('clave', 'Clave del concepto', 'required|numeric|min_length[4]|max_length[4]');
+        $this->form_validation->set_rules('clave', 'Clave del concepto', 'required|numeric|exact_length[4]');
         $this->form_validation->set_rules('descripcion', 'Descripcioón', 'required');
-        $this->form_validation->set_rules('capitulo', 'Capitulo', 'required|numeric');
+        $this->form_validation->set_rules('capitulo', 'Capitulo', 'required|numeric|callback_validarcapitulo');
 
         if( $this->form_validation->run() && $this->input->post() )
         {   
-            //Validos el capitulo
-            if($this->mcapitulos->validar($this->input->post('capitulo',TRUE)))
-                $this->alerts->danger('conceptos',$this->alerts->db_404);
-
             //Preparamos la información para insertar
             $data = array(
                 'co_clave'          => $this->input->post('clave',TRUE),
@@ -113,7 +105,7 @@ class Conceptos extends CI_Controller
         if(!$id)
             $this->alerts->_403();
         //Validos la informacion
-        if($this->mconceptos->validar($id))
+        if($this->mconceptos->validar_id($id))
             $this->alerts->danger('conceptos',$this->alerts->db_404);
 
         //Validamos si la operacion de realizo con éxito
@@ -130,6 +122,23 @@ class Conceptos extends CI_Controller
             else
                 $this->alerts->danger('conceptos',$this->alerts->db_error);
         }
+    }
+    // --------------------------------------------------------------------
+    
+    /**
+     * Valida el capitulo
+     *
+     * @param   Int
+     * @return  boolean
+     */
+    public function validarcapitulo($id)
+    {
+        if($this->mcapitulos->validar_id($id))
+        {
+            $this->form_validation->set_message('validarcapitulo', 'Seleccione un capítulo valido por favor');
+            return FALSE;
+        }
+        return TRUE; 
     }
     // --------------------------------------------------------------------
 }

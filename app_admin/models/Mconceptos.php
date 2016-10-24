@@ -64,21 +64,6 @@ class Mconceptos extends CI_Model
     // --------------------------------------------------------------------
     
     /**
-     * Valida si existe un registro en la base de datos
-     *
-     * @param   Int
-     * @return  Boolean
-     */
-    public function validar($id)
-    {
-        $this->db->where('co_id',(int)$id);
-        $num = $this->db->get('Conceptos')->num_rows();
-
-        return ($num==0);
-    }
-    // --------------------------------------------------------------------
-    
-    /**
      * Elimina un registro en especifico
      *
      * @param   Int
@@ -88,6 +73,21 @@ class Mconceptos extends CI_Model
     {
         $this->db->where('co_id',(int)$id);
         return $this->db->delete('Conceptos');
+    }
+    // --------------------------------------------------------------------
+    
+    /**
+     * Valida si existe un registro en la base de datos con un id especifico
+     *
+     * @param   Int
+     * @return  Boolean
+     */
+    public function validar_id($id)
+    {
+        $this->db->where('co_id',(int)$id);
+        $num = $this->db->get('Conceptos')->num_rows();
+
+        return ($num==0);
     }
     // --------------------------------------------------------------------
 }

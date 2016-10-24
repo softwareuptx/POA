@@ -50,9 +50,12 @@ class Mperiodo extends CI_Model
      * @param   Int
      * @return  Int
      */
-    public function check($periodo_id)
+    public function validar($periodo_id)
     {    
-        return $this->db->get_where('Periodos',array('p_id'=>(int)$periodo_id))->num_rows();
+        $this->db->where('p_id',(int)$periodo_id);
+        $num = $this->db->get('Periodos')->num_rows();
+
+        return ($num==0);
     }
     // --------------------------------------------------------------------
 }

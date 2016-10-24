@@ -95,8 +95,8 @@
                                         echo "<td>".$partida->pa_clave."</td>";
                                         echo "<td>".$partida->pa_descripcion."</td>";
                                         echo "<td>".$partida->pa_tipo."</td>";
-                                        echo "<td>".$partida->pa_indicador."</td>";
-                                        echo "<td><a href='".base_url('conceptos/editar/'.$partida->co_id)."'>".$partida->co_clave."-".$partida->co_descripcion."</a></td>";
+                                        echo "<td> $ ".$partida->pa_indicador."</td>";
+                                        echo "<td><a href='".base_url('conceptos/editar/'.$partida->co_id)."' style='text-decoration: underline'>".$partida->co_clave."-".$partida->co_descripcion."</a></td>";
                                         echo '
                                         <td>
                                             <a href="'.base_url('partidas/editar/'.$partida->pa_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fa fa-pencil-square-o"></i></a>

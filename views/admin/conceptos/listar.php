@@ -64,7 +64,7 @@
                                         </div>
                                         <div class="col-sm-6 text-xs-center text-right">
                                             <div class="form-group">
-                                                <label class="control-label m-r-5">Filtrar por capitulo</label>
+                                                <label class="control-label m-r-5">Filtrar por capítulo</label>
                                                 <select id="demo-foo-filter-status" class="form-control">
                                                     <option value="">Ver todo</option>
                                                     <?php
@@ -92,7 +92,7 @@
                                         echo "<td>".($key+1)."</td>";
                                         echo "<td>".$concepto->co_clave."</td>";
                                         echo "<td>".$concepto->co_descripcion."</td>";
-                                        echo "<td><a href='".base_url('capitulos/editar/'.$concepto->ca_id)."'>".$concepto->ca_clave."-".$concepto->ca_descripcion."</a></td>";
+                                        echo "<td><a href='".base_url('capitulos/editar/'.$concepto->ca_id)."' style='text-decoration: underline'>".$concepto->ca_clave."-".$concepto->ca_descripcion."</a></td>";
                                         echo '
                                         <td>
                                             <a href="'.base_url('conceptos/editar/'.$concepto->co_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fa fa-pencil-square-o"></i></a>
