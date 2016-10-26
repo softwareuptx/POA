@@ -18,6 +18,7 @@ class Instituciones extends CI_Controller
     public function index()
     {
         $data['instituciones'] = $this->minstituciones->listar();
+        $data['instituciones_num'] = $this->minstituciones->listar_num();
         $this->load->view('instituciones/listar',$data);
     }
     // --------------------------------------------------------------------
@@ -29,6 +30,9 @@ class Instituciones extends CI_Controller
      */
     public function agregar()
     {
+        if($this->minstituciones->listar_num()>0)
+            $this->alerts->danger('instituciones','Ya se agrego una institución');
+
         // Validaciones de Formulario
         $this->form_validation->set_rules('nombre', 'Nombre de la institución', 'required');
         $this->form_validation->set_rules('vision', 'Visión', 'required');

@@ -68,7 +68,7 @@
                                             <div class="form-group">
                                                 <label class="control-label m-r-5">Filtrar por concepto</label>
                                                 <select id="demo-foo-filter-status" class="form-control">
-                                                    <option value="">Ver todo</option>
+                                                    <option value="">Mostrar todo</option>
                                                     <?php
                                                     foreach ($conceptos as $key => $conceptos){
                                                         echo '<option value="'.$conceptos->co_clave.'-'.$conceptos->co_descripcion.'">'.$conceptos->co_clave.'-'.$conceptos->co_descripcion.'</option>';

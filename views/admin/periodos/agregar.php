@@ -110,8 +110,6 @@
 <!-- ========== Base JS ========== -->
 <?=$this->load->view('includes/base_js','',TRUE)?>
 <script>
-    var resizefunc = [];
-
     jQuery(document).ready(function() {
         //Año
         jQuery('#anio').datepicker({

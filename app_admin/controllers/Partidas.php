@@ -51,7 +51,7 @@ class Partidas extends CI_Controller
         // Validaciones de Formulario
         $this->form_validation->set_rules('clave', 'Clave del concepto', 'required|numeric|exact_length[4]|is_unique[Partidas.pa_clave]');
         $this->form_validation->set_rules('descripcion', 'Descripcioón', 'required');
-        $this->form_validation->set_rules('tipo', 'Tipo', 'required|numeric|exact_length[1]');
+        $this->form_validation->set_rules('tipo', 'Tipo', 'required|numeric|exact_length[1]|in_list[1,2]');
         $this->form_validation->set_rules('concepto', 'Concepto', 'required|numeric|callback_validarconcepto');
         $this->form_validation->set_rules('indicador', 'Presupuesto');
 
@@ -98,7 +98,7 @@ class Partidas extends CI_Controller
         // Validaciones de Formulario
         $this->form_validation->set_rules('clave', 'Clave del concepto', 'required|numeric|exact_length[4]');
         $this->form_validation->set_rules('descripcion', 'Descripcioón', 'required');
-        $this->form_validation->set_rules('tipo', 'Tipo', 'required|numeric|exact_length[1]');
+        $this->form_validation->set_rules('tipo', 'Tipo', 'required|numeric|exact_length[1]|in_list[1,2]');
         $this->form_validation->set_rules('concepto', 'Concepto', 'required|numeric|callback_validarconcepto');
         $this->form_validation->set_rules('indicador', 'Presupuesto');
 
