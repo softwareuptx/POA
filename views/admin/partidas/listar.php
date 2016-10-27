@@ -68,7 +68,7 @@
                                             <div class="form-group">
                                                 <label class="control-label m-r-5">Filtrar por concepto</label>
                                                 <select id="demo-foo-filter-status" class="form-control">
-                                                    <option value="">Ver todo</option>
+                                                    <option value="">Mostrar todo</option>
                                                     <?php
                                                     foreach ($conceptos as $key => $conceptos){
                                                         echo '<option value="'.$conceptos->co_clave.'-'.$conceptos->co_descripcion.'">'.$conceptos->co_clave.'-'.$conceptos->co_descripcion.'</option>';
@@ -95,8 +95,8 @@
                                         echo "<td>".$partida->pa_clave."</td>";
                                         echo "<td>".$partida->pa_descripcion."</td>";
                                         echo "<td>".$partida->pa_tipo."</td>";
-                                        echo "<td>".$partida->pa_indicador."</td>";
-                                        echo "<td><a href='".base_url('conceptos/editar/'.$partida->co_id)."'>".$partida->co_clave."-".$partida->co_descripcion."</a></td>";
+                                        echo "<td> $ ".$partida->pa_indicador."</td>";
+                                        echo "<td><a href='".base_url('conceptos/editar/'.$partida->co_id)."' style='text-decoration: underline'>".$partida->co_clave."-".$partida->co_descripcion."</a></td>";
                                         echo '
                                         <td>
                                             <a href="'.base_url('partidas/editar/'.$partida->pa_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fa fa-pencil-square-o"></i></a>

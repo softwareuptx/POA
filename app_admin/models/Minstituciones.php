@@ -62,6 +62,17 @@ class Minstituciones extends CI_Model
     // --------------------------------------------------------------------
     
     /**
+     * Obtiene el numero de registros
+     *
+     * @return  Int
+     */
+    public function listar_num()
+    {
+        return $this->db->get('Instituciones')->num_rows();
+    }
+    // --------------------------------------------------------------------
+    
+    /**
      * Valida si existe un registro en la base de datos
      *
      * @param   Int

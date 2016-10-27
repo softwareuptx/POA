@@ -9,6 +9,9 @@
     <?=$this->load->view('includes/base_favicon','',TRUE)?>
     <!-- ========== /Icon  ========== -->
     <title><?=title()?></title>
+    <link href="<?=plugins('timepicker/bootstrap-timepicker.min.css')?>" rel="stylesheet" type="text/css" />
+    <link href="<?=plugins('mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')?>" rel="stylesheet" type="text/css" />
+    <link href="<?=plugins('bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')?>" rel="stylesheet" type="text/css" />
     <!-- ========== Base CSS ========== -->
     <?=$this->load->view('includes/base_css','',TRUE)?>
     <!-- ========== /Base CSS ========== -->
@@ -41,51 +44,39 @@
                     <div class="col-sm-12">
                         <div class="card-box">
                             <!-- Formulario -->
-                            <?=form_open('partidas/editar/'.$partida->pa_id)?>
+                            <?=form_open('periodos/agregar')?>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="clave">Clave de la partida<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="clave" name="clave" value="<?php if(set_value('clave')==''){ echo $partida->pa_clave; }else{ echo set_value('clave'); } ?>">
-                                        <?=form_error('clave')?>
+                                        <label for="anio">Año<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="anio" name="anio" placeholder="AAAA" value="<?=set_value('anio')?>">
+                                        <?=form_error('anio')?>
                                     </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="tipo">Tipo<span class="text-danger">*</span></label>
-                                        <select class="form-control selectpicker" id="tipo" name="tipo" data-style="btn-white">
-                                            <option value="1" <?=set_select('tipo', '1',FALSE,$partida->pa_tipo)?>>Genérica</option>
-                                            <option value="2" <?=set_select('tipo', '2',FALSE,$partida->pa_tipo)?>>Específica</option>
-                                        </select>
-                                        <?=form_error('tipo')?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="descripcion">Descripción<span class="text-danger">*</span></label>
-                                        <textarea class="form-control" id="descripcion" name="descripcion"><?php if(set_value('descripcion')==''){ echo $partida->pa_descripcion; }else{ echo set_value('descripcion'); } ?></textarea>
+                                        <input type="text" class="form-control" id="descripcion" name="descripcion" value="<?=set_value('descripcion')?>">
                                         <?=form_error('descripcion')?>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="status">Status<span class="text-danger">*</span></label>
+                                        <select class="form-control selectpicker" id="status" name="status" data-style="btn-white">
+                                            <option value="2" <?=set_select('status', '2')?>>Cerrado</option>
+                                            <option value="1" <?=set_select('status', '1')?>>Activo</option>
+                                        </select>
+                                        <?=form_error('status')?>
+                                        <span class="help-block"><small>El status del periodo indica si esta activo para integrar la programación o cerrado </small></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                    <label for="indicador">Presupuesto autorizado</label>
-                                        <input type="text" class="form-control cantidad" id="indicador" name="indicador" placeholder="$ " data-a-sign="$ " value="<?php if(set_value('indicador')==''){ echo $partida->pa_indicador; }else{ echo set_value('indicador'); } ?>">
-                                        <?=form_error('indicador')?>
+                                        <label for="inicio">Fecha de inicio<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="inicio" name="inicio" placeholder="AAAA-MM-DD" value="<?=set_value('inicio')?>">
+                                        <?=form_error('inicio')?>
                                     </div>
                                     <div class="form-group">
-                                        <label for="concepto">Concepto<span class="text-danger">*</span></label>
-                                        <select class="form-control selectpicker" data-live-search="true"  id="concepto" name="concepto" data-style="btn-white">
-                                            <?php
-                                            foreach ($conceptos as $key => $concepto){
-                                                echo '<option value="'.$concepto->co_id.'" '.set_select('concepto', $concepto->co_id,FALSE,$partida->pa_concepto).'>'.$concepto->co_clave.'-'.$concepto->co_descripcion.'</option>';
-                                            }
-                                            ?>
-                                        </select>
-                                        <?=form_error('concepto')?>
+                                        <label for="fin">Fecha de fin<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="fin" name="fin" placeholder="AAAA-MM-DD" value="<?=set_value('fin')?>">
+                                        <?=form_error('fin')?>
                                     </div>
                                 </div>
                             </div>
@@ -94,9 +85,9 @@
                                 <div class="pull-left">
                                     <button type="submit" class="btn btn-default btn-rounded waves-effect waves-light">
                                         <span class="btn-label">
-                                            <i class="fa fa-refresh"></i>
+                                            <i class="fa fa-check"></i>
                                         </span>
-                                        Actualizar
+                                        Guardar
                                     </button>
                                 </div>
                             </div>
@@ -113,12 +104,34 @@
     <!-- ========== End Footer ========== -->
 </div>
 <!-- END wrapper -->
+<script>
+    var resizefunc = [];
+</script>
 <!-- ========== Base JS ========== -->
 <?=$this->load->view('includes/base_js','',TRUE)?>
 <script>
-    var resizefunc = [];
-    jQuery(function($) {
-        $('.cantidad').autoNumeric('init');    
+    jQuery(document).ready(function() {
+        //Año
+        jQuery('#anio').datepicker({
+            autoclose: true,
+            format: "yyyy",
+            minViewMode:'years',
+        });
+
+        //Fecha
+        jQuery('#inicio').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: "yyyy-mm-dd",
+            language: 'es'
+        });
+
+        jQuery('#fin').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: "yyyy-mm-dd",
+            language: 'es'
+        });
     });
 </script>
 </body>

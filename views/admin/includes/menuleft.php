@@ -16,6 +16,9 @@
                     <hr style="margin-bottom: 0px !important">
                 </li>
                 <li>
+                    <a href="<?=base_url('periodos')?>" class="waves-effect <?=menu('periodos')?>"><i class="fa fa-calendar-check-o"></i> <span>Periodos</span></a>
+                </li>
+                <li>
                     <a href="<?=base_url('instituciones')?>" class="waves-effect <?=menu('instituciones')?>"><i class="fa fa-institution"></i> <span>Instituciones</span></a>
                 </li>
                 <li>

@@ -18,7 +18,7 @@ class Login extends CI_Controller
     public function index()
     {
         // Validaciones de Formulario
-        $this->form_validation->set_rules('periodo', 'Año', 'required|numeric|callback_valperiodo');
+        $this->form_validation->set_rules('periodo', 'Año', 'required|numeric|callback_validarperiodo');
         $this->form_validation->set_rules('numero', 'No. en SII', 'required|numeric');
         $this->form_validation->set_rules('password', 'Contraseña', 'required');
 
@@ -32,7 +32,18 @@ class Login extends CI_Controller
             redirect();
         }
 
-        $data['periodos'] = $this->mperiodo->getlist();
+        $data['periodos'] = $this->mperiodos->listar();
+
+        foreach ($data['periodos'] as $key => $periodo)
+        {
+            if($periodo->p_status==1)
+            {
+                $periodo->etiqueta = $periodo->p_anio."(activo)";
+            }else
+            {
+                $periodo->etiqueta = $periodo->p_anio;
+            }
+        }
         $this->load->view('login',$data);
     }
     // --------------------------------------------------------------------
@@ -56,9 +67,9 @@ class Login extends CI_Controller
      * @param   Int
      * @return  boolean
      */
-    public function valperiodo($periodo_id)
+    public function validarperiodo($periodo_id)
     {
-        if($this->mperiodo->check($periodo_id)<1)
+        if($this->mperiodos->validar_id($periodo_id))
         {
             $this->form_validation->set_message('valperiodo', 'Seleccione un periodo valido');
             return FALSE;

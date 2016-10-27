@@ -28,10 +28,10 @@ if ( ! function_exists('user') )
 			if( $usuario = $CI->mlogin->getUsuario( $CI->session->userdata('usuario')->u_id ))
 			{	
 				//Obtenemos el periodo selecionado
-				$usuario->periodo = $CI->mperiodo->get( $CI->session->userdata('periodo') );
+				$usuario->periodo = $CI->mperiodos->obtener( $CI->session->userdata('periodo') );
 
 				//Validos la clase de periodo
-				if($usuario->periodo->p_activo==1)
+				if($usuario->periodo->p_status==1)
 				{
 					$usuario->periodo->status 	= 'activo';
 					$usuario->periodo->class 	= 'success';
@@ -75,7 +75,7 @@ if ( ! function_exists('periodo') )
 		
 		//Instaceamos las librerias
 		$CI = &get_instance();
-		$periodo = $CI->mperiodo->actual();
+		$periodo = $CI->mperiodos->actual();
 
 		return $periodo;
 	}

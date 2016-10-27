@@ -2,13 +2,13 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Sistema de Programacion Operativa Anual (POA)
- * Modelos / Modelo Partidas
+ * Modelos / Modelo periodos
  *
- * Acciones para el modulo Partidas
+ * Acciones para el modulo periodos
  *
  * @author Oficina de Desarrollo de Software / Universidad Politecnica de Tlaxcala
  */
-class Mpartidas extends CI_Model
+class Mperiodos extends CI_Model
 {   
     /**
      * Agrega un nuevo registro a la base de datos
@@ -18,7 +18,7 @@ class Mpartidas extends CI_Model
      */
     public function agregar($data)
     {
-        return $this->db->insert('Partidas',$data);
+        return $this->db->insert('Periodos',$data);
     }
     // --------------------------------------------------------------------
     
@@ -31,8 +31,8 @@ class Mpartidas extends CI_Model
      */
     public function editar($id, $data)
     {
-        $this->db->where('pa_id',(int)$id);
-        return $this->db->update('Partidas',$data);
+        $this->db->where('p_id',(int)$id);
+        return $this->db->update('Periodos',$data);
     }
     // --------------------------------------------------------------------
     
@@ -44,10 +44,20 @@ class Mpartidas extends CI_Model
      */
     public function obtener($id)
     {
-        $this->db->join('Conceptos','Conceptos.co_id=Partidas.pa_concepto');
-        $this->db->where('pa_id',(int)$id);
+        $this->db->where('p_id',(int)$id);
         $this->db->limit(1);
-        return $this->db->get('Partidas')->row();
+        return $this->db->get('Periodos')->row();
+    }
+    // --------------------------------------------------------------------
+    
+    /**
+     * Obtiene el periodo activo registrado
+     *
+     * @return  object
+     */
+    public function actual()
+    {
+        return $this->db->get_where('Periodos',array('p_status'=>1))->row();
     }
     // --------------------------------------------------------------------
     
@@ -58,8 +68,7 @@ class Mpartidas extends CI_Model
      */
     public function listar()
     {
-        $this->db->join('Conceptos','Conceptos.co_id=Partidas.pa_concepto');
-        return $this->db->get('Partidas')->result();
+        return $this->db->get('Periodos')->result();
     }
     // --------------------------------------------------------------------
     
@@ -71,41 +80,41 @@ class Mpartidas extends CI_Model
      */
     public function eliminar($id)
     {
-        $this->db->where('pa_id',(int)$id);
-        return $this->db->delete('Partidas');
+        $this->db->where('p_id',(int)$id);
+        return $this->db->delete('Periodos');
     }
     // --------------------------------------------------------------------
     
     /**
-     * Valida si existe un registro en la base de datos con id especifico
+     * Valida si existe un registro en la base de datos
      *
      * @param   Int
      * @return  Boolean
      */
     public function validar_id($id)
     {
-        $this->db->where('pa_id',(int)$id);
-        $num = $this->db->get('Partidas')->num_rows();
+        $this->db->where('p_id',(int)$id);
+        $num = $this->db->get('Periodos')->num_rows();
 
         return ($num==0);
     }
     // --------------------------------------------------------------------
     
     /**
-     * Valida si existe un registro en la base de datos con la misma clave
+     * Valida si existe un registro en la base de datos deacuerdo al año
      *
-     * @param   String
+     * @param   Int
      * @return  Boolean
      */
-    public function validar_clave($clave)
+    public function validar_anio($anio)
     {
-        $this->db->where('pa_clave',$clave);
-        $num = $this->db->get('Partidas')->num_rows();
+        $this->db->where('p_anio',$anio);
+        $num = $this->db->get('Periodos')->num_rows();
 
         return ($num>0);
     }
     // --------------------------------------------------------------------
 }
-/* Final del archivo MPartidas.php 
- * Ubicacion: ./app_admin/models/MPartidas.php
+/* Final del archivo Mperiodos.php 
+ * Ubicacion: ./app_admin/models/Mperiodos.php
  */

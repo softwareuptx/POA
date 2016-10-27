@@ -44,8 +44,11 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th data-toggle="true">Clave</th>
+                                        <th data-toggle="true">Año</th>
                                         <th data-hide="phone, tablet">Descripción</th>
+                                        <th data-hide="phone, tablet">Inicio</th>
+                                        <th data-hide="phone, tablet">Fin</th>
+                                        <th data-hide="phone, tablet">Status</th>
                                         <th style="width: 80px;"></th>
                                     </tr>
                                 </thead>
@@ -53,7 +56,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 text-xs-center">
                                             <div class="form-group">
-                                                <a href="<?=base_url('capitulos/agregar')?>" type="button" class="btn btn-default btn-rounded waves-effect waves-light">
+                                                <a href="<?=base_url('periodos/agregar')?>" type="button" class="btn btn-default btn-rounded waves-effect waves-light">
                                                     <span class="btn-label">
                                                         <i class="fa fa-plus m-r-5"></i>
                                                     </span>
@@ -62,6 +65,14 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-6 text-xs-center text-right">
+                                            <div class="form-group">
+                                                <label class="control-label m-r-5">Filtrar</label>
+                                                <select id="demo-foo-filter-status" class="form-control">
+                                                    <option value="">Mostar todo</option>
+                                                    <option value="activo">Activo</option>
+                                                    <option value="cerrado">Cerrado</option>
+                                                </select>
+                                            </div>
                                             <div class="input-group">
                                                 <input type="text" id="demo-foo-search" name="example-input1-group2" class="form-control" placeholder="Buscar">
                                                 <span class="input-group-btn">
@@ -74,15 +85,18 @@
                                 <tbody>
                                     <!-- Contenido de la tabla -->
                                     <?php
-                                    foreach ($capitulos as $key => $capitulo) {
+                                    foreach ($periodos as $key => $periodo){
                                         echo "<tr>";
                                         echo "<td>".($key+1)."</td>";
-                                        echo "<td><strong>".$capitulo->ca_clave."</strong></td>";
-                                        echo "<td>".$capitulo->ca_descripcion."</td>";
+                                        echo "<td><strong>".$periodo->p_anio."</strong></td>";
+                                        echo "<td>".$periodo->p_descripcion."</td>";
+                                        echo "<td>".$periodo->p_inicio."</td>";
+                                        echo "<td>".$periodo->p_fin."</td>";
+                                        echo "<td>".$periodo->status."</td>";
                                         echo '
                                         <td>
-                                            <a href="'.base_url('capitulos/editar/'.$capitulo->ca_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fa fa-pencil-square-o"></i></a>
-                                            <a href="'.base_url('capitulos/eliminar/'.$capitulo->ca_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Eliminar registro"><i class="fa fa-trash-o"></i></a>
+                                            <a href="'.base_url('periodos/editar/'.$periodo->p_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fa fa-pencil-square-o"></i></a>
+                                            <a href="'.base_url('periodos/eliminar/'.$periodo->p_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Eliminar registro"><i class="fa fa-trash-o"></i></a>
                                         </td>
                                         ';
                                         echo "</tr>";

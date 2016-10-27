@@ -36,10 +36,7 @@
                                                     <select class="form-control input-sm" name="periodo">
                                                         <?php
                                                         foreach ($periodos as $key => $periodo){
-                                                            echo '<option value="'.$periodo->p_id.'"'.set_select('periodo', $periodo->p_id).'>'.$periodo->p_anio;
-                                                            if($periodo->p_activo==1)
-                                                                echo " (activo)";
-                                                            echo '</option>';
+                                                            echo '<option value="'.$periodo->p_id.'"'.set_select('periodo', $periodo->p_id).'>'.$periodo->etiqueta.'</option>';
                                                         }
                                                         ?>
                                                     </select>
