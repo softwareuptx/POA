@@ -41,44 +41,43 @@
                     <div class="col-sm-12">
                         <div class="card-box">
                             <!-- Formulario -->
-                            <?=form_open('instituciones/agregar')?>
+                            <?=form_open('unidades/agregar')?>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="nombre">Nombre de la institución<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="nombre" name="nombre" value="<?=set_value('nombre')?>">
-                                        <?=form_error('nombre')?>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="pagina">Página web</label>
-                                        <input type="text" class="form-control" id="pagina" name="pagina" value="<?=set_value('pagina')?>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="telefono">Teléfono</label>
-                                        <input type="text" class="form-control" id="telefono" name="telefono" value="<?=set_value('telefono')?>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="direccion">Dirección</label>
-                                        <textarea class="form-control" name="direccion"><?=set_value('direccion')?></textarea>
+                                        <label for="institucion">Nombre de la Institución<span class="text-danger">*</span></label>
+                                        <select class="form-control selectpicker" data-live-search="true"  id="institucion" name="institucion" data-style="btn-white">
+                                            <?php
+                                            foreach ($instituciones as $key => $institucion){
+                                                echo '<option value="'.$institucion->in_id.'" '.set_select('institucion', $institucion->in_id).'>'.$institucion->in_nombre.'</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                        <?=form_error('institucion')?>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="vision">Visión<span class="text-danger">*</span></label>
-                                        <textarea class="form-control" id="vision" name="vision"><?=set_value('vision')?></textarea>
-                                        <?=form_error('vision')?>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="mision">Misión<span class="text-danger">*</span></label>
-                                        <textarea class="form-control" id="mision" name="mision"><?=set_value('mision')?></textarea>
-                                        <?=form_error('mision')?>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="politicas">Políticas<span class="text-danger">*</span></label>
-                                        <textarea class="form-control" id="politicas" name="politicas"><?=set_value('politicas')?></textarea>
-                                        <?=form_error('politicas')?>
+                                        <label for="persona">Nombre del responsable<span class="text-danger">*</span></label>
+                                        <select class="form-control selectpicker" data-live-search="true"  id="persona" name="persona" data-style="btn-white">
+                                            <?php
+                                                foreach ($personas as $key => $persona){
+                                                    echo '<option value="'.$persona->idpersonas.'" '.set_select('persona', $persona->idpersonas).'>'.$persona->nombre.' '.$persona->apellidopat.' '.$persona->apellidomat.'</option>';
+                                                }
+                                            ?>
+                                        </select>
+                                        <?=form_error('persona')?>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="unidad">Nombre de la Unidad<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="unidad" name="unidad" value="<?=set_value('unidad')?>">
+                                        <?=form_error('unidad')?>
+                                    </div>
+                                </div>  
                             </div>
                             <div class="row">
                                 <hr>

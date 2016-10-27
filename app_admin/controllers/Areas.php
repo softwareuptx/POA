@@ -2,13 +2,13 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Sistema de Programacion Operativa Anual (POA)
- * Controllers / Modulo Unidades
+ * Controllers / Modulo Areas
  *
- * Modulo CRUD para Unidades 
+ * Modulo CRUD para Areas 
  *
  * @author Oficina de Desarrollo de Software / Universidad Politecnica de Tlaxcala
  */
-class Unidades extends CI_Controller
+class Areas extends CI_Controller
 {
     /**
      * Muestra el listado de unidades
@@ -17,9 +17,9 @@ class Unidades extends CI_Controller
      */
     public function index()
     {
+        $data['areas'] = $this->mareas->listar();
         $data['unidades'] = $this->munidades->listar();
-        $data['instituciones'] = $this->minstituciones->listar();
-        $this->load->view('unidades/listar',$data);
+        $this->load->view('areas/listar',$data);
     }
     // --------------------------------------------------------------------
     
@@ -31,20 +31,24 @@ class Unidades extends CI_Controller
     public function agregar()
     {
         // Validaciones de Formulario
-        $this->form_validation->set_rules('institucion', 'Nombre de la institución', 'required|callback_validarinstitucion');
-        $this->form_validation->set_rules('unidad', 'Nombre de la Unidad', 'required');
-        $this->form_validation->set_rules('persona', 'Nombre del responsable', 'required|callback_validarpersona');
+        $this->form_validation->set_rules('area', 'Nombre del Área', 'required');
+        $this->form_validation->set_rules('unidad', 'Nombre de la Unidad', 'required|callback_validarunidad');
+        $this->form_validation->set_rules('persona', 'Nombre del Responsable', 'required|callback_validarpersona');
 
         if( $this->form_validation->run() && $this->input->post() )
         {   
             $personas = $this->input->post('persona');
 
+            $unidades = $this->input->post('unidad');
+
             $persona = $this->mpersonas->obtener($personas);
+
+            $institucion = $this->munidades->obtener($unidades);
 
             //Preparamos la información para insertar en la tabla usuarios
             $data_persona = array(
                 'u_refsii'      => $persona->idpersonas,
-                'u_institucion' => $this->input->post('institucion',TRUE),
+                'u_institucion' => $institucion->uni_institucion,
                 'u_nombre'      => $persona->nombre,
                 'u_appaterno'   => $persona->apellidopat,
                 'u_apmaterno'   => $persona->apellidomat,
@@ -56,22 +60,22 @@ class Unidades extends CI_Controller
             $idpersona = $this->mpersonas->agregar($data_persona);
 
             //Preparamos la información para insertar
-            $data_unidades = array(
-                'uni_institucion' => $this->input->post('institucion',TRUE),
-                'uni_nombre'      => $this->input->post('unidad',TRUE),
-                'uni_responsable' => $idpersona,
-                'uni_create'      => date('Y:m:d')
+            $data_areas = array(
+                'a_nombre'      => $this->input->post('area',TRUE),
+                'a_director'    => $idpersona,
+                'a_unidad'      => $unidades,
+                'a_create'      => date('Y:m:d')
                 );
 
-            $this->munidades->agregar($data_unidades);
-            $this->alerts->success('unidades');
+            $this->mareas->agregar($data_areas);
+            $this->alerts->success('areas');
         }
 
         $data['personas']        = $this->mpersonas->listar();
 
-        $data['instituciones']   = $this->minstituciones->listar();
+        $data['unidades']        = $this->munidades->listar();
         
-        $this->load->view('unidades/agregar',$data);
+        $this->load->view('areas/agregar',$data);
     }
     // --------------------------------------------------------------------
     
@@ -87,25 +91,27 @@ class Unidades extends CI_Controller
         if(!$id)
             $this->alerts->_403();
         //Validos la informacion
-        if($this->munidades->validar($id))
-            $this->alerts->danger('unidades',$this->alerts->db_404);
+        if($this->mareas->validar($id))
+            $this->alerts->danger('areas',$this->alerts->db_404);
 
         // Validaciones de Formulario
-        $this->form_validation->set_rules('institucion', 'Nombre de la institución', 'required|callback_validarinstitucion');
-        $this->form_validation->set_rules('unidad', 'Nombre de la Unidad', 'required');
-        $this->form_validation->set_rules('persona', 'Nombre del responsable', 'required|callback_validarpersona');
+        $this->form_validation->set_rules('area', 'Nombre del Área', 'required');
+        $this->form_validation->set_rules('unidad', 'Nombre de la Unidad', 'required|callback_validarunidad');
+        $this->form_validation->set_rules('persona', 'Nombre del Responsable', 'required|callback_validarpersona');
 
         if( $this->form_validation->run() && $this->input->post() )
-        {   
-
+        {
             $personas = $this->input->post('persona');
+
+            $unidades = $this->input->post('unidad');
 
             $persona = $this->mpersonas->obtener($personas);
 
+            $institucion = $this->munidades->obtener($unidades);
             //Preparamos la información para insertar en la tabla usuarios
             $data_persona = array(
                 'u_refsii'      => $persona->idpersonas,
-                'u_institucion' => $this->input->post('institucion',TRUE),
+                'u_institucion' => $institucion->uni_institucion,
                 'u_nombre'      => $persona->nombre,
                 'u_appaterno'   => $persona->apellidopat,
                 'u_apmaterno'   => $persona->apellidomat,
@@ -115,26 +121,26 @@ class Unidades extends CI_Controller
 
             //Agregamos la información en la tabla usuarios
             $idpersona = $this->mpersonas->agregar($data_persona);
-
+            
             //Preparamos la información para insertar
-            $data_unidad = array(
-                'uni_institucion' => $this->input->post('institucion',TRUE),
-                'uni_nombre'      => $this->input->post('unidad',TRUE),
-                'uni_responsable' => $idpersona,
-                'uni_update'      => date('Y:m:d')
+            $data_area = array(
+                'a_nombre'      => $this->input->post('area',TRUE),
+                'a_director'    => $idpersona,
+                'a_unidad'      => $this->input->post('unidad',TRUE),
+                'a_update'      => date('Y:m:d')
                 );
 
-            $this->munidades->editar($id, $data_unidad);
-            $this->alerts->success('unidades');
+            $this->mareas->editar($id, $data_area);
+            $this->alerts->success('areas');
         }
 
         $data['personas']        = $this->mpersonas->listar();
 
-        $data['instituciones']   = $this->minstituciones->listar();
+        $data['unidades']   = $this->munidades->listar();
 
-        $data['unidad']        = $this->munidades->obtener($id);
+        $data['area']        = $this->mareas->obtener($id);
 
-        $this->load->view('unidades/editar',$data);
+        $this->load->view('areas/editar',$data);
     }
     // --------------------------------------------------------------------
     
@@ -150,36 +156,36 @@ class Unidades extends CI_Controller
         if(!$id)
             $this->alerts->_403();
         //Validos la informacion
-        if($this->munidades->validar($id))
-            $this->alerts->danger('unidades',$this->alerts->db_404);
+        if($this->mareas->validar($id))
+            $this->alerts->danger('areas',$this->alerts->db_404);
 
         //Validamos si la operacion de realizo con éxito
-        if($this->munidades->eliminar($id))
+        if($this->mareas->eliminar($id))
         {
             //si se realizo con exito mandamos mensaje satisfactorio
-            $this->alerts->success('unidades');
+            $this->alerts->success('areas');
         }
         else
         {
             //Comparamos el codigo de error de la base de datos
             if($this->db->error()['code']==1451)
-                $this->alerts->danger('unidades',$this->alerts->db_nodelete);
+                $this->alerts->danger('areas',$this->alerts->db_nodelete);
             else
-                $this->alerts->danger('unidades',$this->alerts->db_error);
+                $this->alerts->danger('areas',$this->alerts->db_error);
         }
     }
     // --------------------------------------------------------------------
     /**
-     * Valida la institución
+     * Valida la unidad
      *
      * @param   Int
      * @return  boolean
      */
-    public function validarinstitucion($id)
+    public function validarunidad($id)
     {
-        if($this->minstituciones->validar($id))
+        if($this->munidades->validar($id))
         {
-            $this->form_validation->set_message('validarinstitucion', 'Seleccione una institución valida por favor');
+            $this->form_validation->set_message('validarunidad', 'Seleccione una unidad valida por favor');
             return FALSE;
         }
         return TRUE; 

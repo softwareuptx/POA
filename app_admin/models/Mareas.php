@@ -2,13 +2,13 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Sistema de Programacion Operativa Anual (POA)
- * Modelos / Modelo unidades
+ * Modelos / Modelo Areas
  *
- * Acciones para el modulo unidades
+ * Acciones para el modulo areas
  *
  * @author Oficina de Desarrollo de Software / Universidad Politecnica de Tlaxcala
  */
-class Munidades extends CI_Model
+class Mareas extends CI_Model
 {   
 
     /**
@@ -19,7 +19,7 @@ class Munidades extends CI_Model
      */
     public function agregar($data)
     {
-        return $this->db->insert('Unidades',$data);
+        return $this->db->insert('Areas',$data);
     }
     // --------------------------------------------------------------------    
     /**
@@ -31,8 +31,8 @@ class Munidades extends CI_Model
      */
     public function editar($id, $data)
     {
-        $this->db->where('uni_id',(int)$id);
-        return $this->db->update('Unidades',$data);
+        $this->db->where('a_id',(int)$id);
+        return $this->db->update('Areas',$data);
     }
     // --------------------------------------------------------------------
     
@@ -44,21 +44,22 @@ class Munidades extends CI_Model
      */
     public function obtener($id)
     {
-        $this->db->join('Usuarios','Usuarios.u_id=Unidades.uni_responsable');
-        $this->db->where('uni_id',(int)$id);
+        $this->db->join('Usuarios','Usuarios.u_id=Areas.a_director');
+        $this->db->where('a_id',(int)$id);
         $this->db->limit(1);
-        return $this->db->get('Unidades')->row();
+        return $this->db->get('Areas')->row();
     }
     // --------------------------------------------------------------------
     /**
-     * Obtiene la lista de las unidades
+     * Obtiene la lista de las areas
      *
      * @return  list object
      */
     public function listar()
     {
         $this->db->join('Instituciones','Instituciones.in_id=Unidades.uni_institucion');
-        $this->db->join('Usuarios','Usuarios.u_id=Unidades.uni_responsable');
+        $this->db->join('Areas','Areas.a_unidad=Unidades.uni_id');
+        $this->db->join('Usuarios','Usuarios.u_id=Areas.a_director');
         return $this->db->get('Unidades')->result();
     }
     // --------------------------------------------------------------------
@@ -70,8 +71,8 @@ class Munidades extends CI_Model
      */
     public function validar($id)
     {
-        $this->db->where('uni_id',(int)$id);
-        $num = $this->db->get('Unidades')->num_rows();
+        $this->db->where('a_id',(int)$id);
+        $num = $this->db->get('Areas')->num_rows();
 
         return ($num==0);
     }
@@ -85,11 +86,11 @@ class Munidades extends CI_Model
      */
     public function eliminar($id)
     {
-        $this->db->where('uni_id',(int)$id);
-        return $this->db->delete('Unidades');
+        $this->db->where('a_id',(int)$id);
+        return $this->db->delete('Areas');
     }
     // --------------------------------------------------------------------
 }
-/* Final del archivo Munidades.php 
- * Ubicacion: ./app_admin/models/Munidades.php
+/* Final del archivo Mareas.php 
+ * Ubicacion: ./app_admin/models/Mareas.php
  */

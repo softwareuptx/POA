@@ -44,8 +44,9 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th data-toggle="true">Unidad</th>
-                                        <th data-hide="phone, tablet">Responsable</th>
+                                        <th data-hide="phone, tablet">Unidad</th>
+                                        <th data-toggle="true">Area</th>
+                                        <th>Responsable</th>
                                         <th data-hide="phone, tablet">Institución</th>
                                         <th style="width: 80px;"></th>
                                     </tr>
@@ -54,7 +55,7 @@
                                     <div class="row">
                                         <div class="col-sm-6 text-xs-center">
                                             <div class="form-group">
-                                                <a href="<?=base_url('unidades/agregar')?>" type="button" class="btn btn-default btn-rounded waves-effect waves-light">
+                                                <a href="<?=base_url('areas/agregar')?>" type="button" class="btn btn-default btn-rounded waves-effect waves-light">
                                                     <span class="btn-label">
                                                         <i class="fa fa-plus m-r-5"></i>
                                                     </span>
@@ -64,12 +65,12 @@
                                         </div>
                                         <div class="col-sm-6 text-xs-center text-right">
                                             <div class="form-group">
-                                                <label class="control-label m-r-5">Filtrar por institución</label>
+                                                <label class="control-label m-r-5">Filtrar por unidad</label>
                                                 <select id="demo-foo-filter-status" class="form-control">
                                                     <option value="">Ver todo</option>
                                                     <?php
-                                                    foreach ($instituciones as $key => $institucion){
-                                                        echo '<option value="'.$institucion->in_nombre.'">'.$institucion->in_nombre.'</option>';
+                                                    foreach ($unidades as $key => $unidad){
+                                                        echo '<option value="'.$unidad->uni_nombre.'">'.$unidad->uni_nombre.'</option>';
                                                     }
 
                                                     ?>
@@ -87,16 +88,17 @@
                                 <tbody>
                                     <!-- Contenido de la tabla -->
                                     <?php
-                                    foreach ($unidades as $key => $unidad){
+                                    foreach ($areas as $key => $area){
                                         echo "<tr>";
                                         echo "<td>".($key+1)."</td>";
-                                        echo "<td>".$unidad->uni_nombre."</td>";
-                                        echo "<td>".$unidad->u_nombre." ".$unidad->u_appaterno." ".$unidad->u_apmaterno."</td>";
-                                        echo "<td><a href='".base_url('instituciones/editar/'.$unidad->in_id)."'>".$unidad->in_nombre."</a></td>";
+                                        echo "<td><a href='".base_url('unidades/editar/'.$area->uni_id)."'>".$area->uni_nombre."</td>";
+                                        echo "<td>".$area->a_nombre."</td>";
+                                        echo "<td>".$area->u_nombre." ".$area->u_appaterno." ".$area->u_apmaterno."</td>";
+                                        echo "<td><a href='".base_url('instituciones/editar/'.$area->in_id)."'>".$area->in_nombre."</a></td>";
                                         echo '
                                         <td>
-                                            <a href="'.base_url('unidades/editar/'.$unidad->uni_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fa fa-pencil-square-o"></i></a>
-                                            <a href="'.base_url('unidades/eliminar/'.$unidad->uni_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Eliminar registro"><i class="fa fa-trash-o"></i></a>
+                                            <a href="'.base_url('areas/editar/'.$area->a_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fa fa-pencil-square-o"></i></a>
+                                            <a href="'.base_url('areas/eliminar/'.$area->a_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Eliminar registro"><i class="fa fa-trash-o"></i></a>
                                         </td>
                                         ';
                                         echo "</tr>";

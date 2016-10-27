@@ -22,6 +22,12 @@
                     <a href="<?=base_url('unidades')?>" class="waves-effect <?=menu('unidades')?>"><i class="fa fa-th-large"></i> <span>Unidades</span></a>
                 </li>
                 <li>
+                    <a href="<?=base_url('areas')?>" class="waves-effect <?=menu('areas')?>"><i class="fa fa-arrows-alt"></i> <span>Áreas</span></a>
+                </li>
+                <li>
+                    <a href="<?=base_url('subareas')?>" class="waves-effect <?=menu('subareas')?>"><i class="fa fa-arrows"></i> <span>Subáreas</span></a>
+                </li>
+                <li>
                     <a href="<?=base_url('capitulos')?>" class="waves-effect <?=menu('capitulos')?>"><i class="fa fa-tags"></i> <span>Capitulos</span></a>
                 </li>
                 <li>
