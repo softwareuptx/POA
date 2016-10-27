@@ -94,12 +94,12 @@ class Mpartidas extends CI_Model
     /**
      * Valida si existe un registro en la base de datos con la misma clave
      *
-     * @param   Int
+     * @param   String
      * @return  Boolean
      */
     public function validar_clave($clave)
     {
-        $this->db->where('pa_clave',(string)$clave);
+        $this->db->where('pa_clave',$clave);
         $num = $this->db->get('Partidas')->num_rows();
 
         return ($num>0);

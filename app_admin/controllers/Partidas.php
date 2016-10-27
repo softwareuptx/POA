@@ -96,7 +96,7 @@ class Partidas extends CI_Controller
             $this->alerts->danger('partidas',$this->alerts->db_404);
 
         // Validaciones de Formulario
-        $this->form_validation->set_rules('clave', 'Clave del concepto', 'required|numeric|exact_length[4]');
+        $this->form_validation->set_rules('clave', 'Clave del concepto', 'required|numeric|exact_length[4]|callback_actualizarclave['.$id.']');
         $this->form_validation->set_rules('descripcion', 'Descripcioón', 'required');
         $this->form_validation->set_rules('tipo', 'Tipo', 'required|numeric|exact_length[1]|in_list[1,2]');
         $this->form_validation->set_rules('concepto', 'Concepto', 'required|numeric|callback_validarconcepto');
@@ -172,6 +172,28 @@ class Partidas extends CI_Controller
             return FALSE;
         }
         return TRUE; 
+    }
+    // --------------------------------------------------------------------
+    
+    /**
+     * Validar clave al actualizar registro
+     *
+     * @param   String
+     * @param   Int
+     * @return  Boolean
+     */
+    public function actualizarclave($val, $id)
+    {
+        //Obtenes el partida
+        $partida = $this->mpartidas->obtener($id);
+
+        if($partida->pa_clave!=$val && $this->mpartidas->validar_clave($val))
+        {
+            $this->form_validation->set_message('actualizarclave', 'Clave de partida ya registrada, escriba otra por favor');
+            return FALSE;
+        }
+
+        return TRUE;                
     }
     // --------------------------------------------------------------------
 }

@@ -60,7 +60,7 @@ class Periodos extends CI_Controller
         $this->form_validation->set_rules('descripcion', 'Descripción', 'required');
         $this->form_validation->set_rules('inicio', 'Fecha de inicio', 'required');
         $this->form_validation->set_rules('fin', 'Fecha de fin', 'required');
-        $this->form_validation->set_rules('status', 'Status', 'required|exact_length[1]|in_list[1,2]|callback_validaractivo');
+        $this->form_validation->set_rules('status', 'Status', 'required|exact_length[1]|in_list[1,2]|callback_validarstatus');
 
         if( $this->form_validation->run() && $this->input->post() )
         {
@@ -98,11 +98,11 @@ class Periodos extends CI_Controller
             $this->alerts->danger('periodos',$this->alerts->db_404);
 
         // Validaciones de Formulario
-        $this->form_validation->set_rules('anio', 'Año del periodo', 'required|numeric|exact_length[4]');
+        $this->form_validation->set_rules('anio', 'Año del periodo', 'required|numeric|exact_length[4]|callback_actualizaranio['.$id.']');
         $this->form_validation->set_rules('descripcion', 'Descripción', 'required');
         $this->form_validation->set_rules('inicio', 'Fecha de inicio', 'required');
         $this->form_validation->set_rules('fin', 'Fecha de fin', 'required');
-        $this->form_validation->set_rules('status', 'Status', 'required|exact_length[1]|in_list[1,2]');
+        $this->form_validation->set_rules('status', 'Status', 'required|exact_length[1]|in_list[1,2]|callback_actualizarstatus['.$id.']');
 
         if( $this->form_validation->run() && $this->input->post() )
         {
@@ -165,20 +165,64 @@ class Periodos extends CI_Controller
      * Validar el periodo activo
      *
      * @param   Int
-     * @return  Void
+     * @return  Boolean
      */
-    public function validaractivo($val)
+    public function validarstatus($val)
     {
         if($val==1)
         {
             if($this->mperiodos->actual())
             {  
-                $this->form_validation->set_message('validaractivo', 'Ya existe un periodo activo, por favor seleccione como periodo no activo');
+                $this->form_validation->set_message('validarstatus', 'Ya existe un periodo activo, por favor seleccione como periodo no activo');
                 return FALSE;
             }
         }
 
         return TRUE; 
+    }
+    // --------------------------------------------------------------------
+    
+    /**
+     * Validar status al actualizar registro
+     *
+     * @param   Int
+     * @param   Int
+     * @return  Boolean
+     */
+    public function actualizarstatus($val, $id)
+    {
+        //Obtenes el periodo
+        $periodo = $this->mperiodos->obtener($id);
+
+        if($periodo->p_status!=$val && $val==1 && $this->mperiodos->actual())
+        {
+            $this->form_validation->set_message('actualizarstatus', 'Ya existe un periodo activo, por favor seleccione como periodo cerrado');
+            return FALSE;
+        }
+
+        return TRUE;                
+    }
+    // --------------------------------------------------------------------
+    
+    /**
+     * Validar año de periodo
+     *
+     * @param   Int
+     * @param   Int
+     * @return  Boolean
+     */
+    public function actualizaranio($val, $id)
+    {
+        //Obtenes el periodo
+        $periodo = $this->mperiodos->obtener($id);
+
+        if($periodo->p_anio!=$val && $this->mperiodos->validar_anio($val))
+        {
+            $this->form_validation->set_message('actualizaranio', 'Ya existe un periodo con este año, por favor selecione otro');
+            return FALSE;
+        }
+
+        return TRUE;                
     }
     // --------------------------------------------------------------------
 }

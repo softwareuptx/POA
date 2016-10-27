@@ -70,7 +70,7 @@ class Conceptos extends CI_Controller
             $this->alerts->danger('conceptos',$this->alerts->db_404);
 
         // Validaciones de Formulario
-        $this->form_validation->set_rules('clave', 'Clave del concepto', 'required|numeric|exact_length[4]');
+        $this->form_validation->set_rules('clave', 'Clave del concepto', 'required|numeric|exact_length[4]|callback_actualizarclave['.$id.']');
         $this->form_validation->set_rules('descripcion', 'Descripcioón', 'required');
         $this->form_validation->set_rules('capitulo', 'Capitulo', 'required|numeric|callback_validarcapitulo');
 
@@ -139,6 +139,28 @@ class Conceptos extends CI_Controller
             return FALSE;
         }
         return TRUE; 
+    }
+    // --------------------------------------------------------------------
+    
+    /**
+     * Validar clave al actualizar registro
+     *
+     * @param   String
+     * @param   Int
+     * @return  Boolean
+     */
+    public function actualizarclave($val, $id)
+    {
+        //Obtenes el concepto
+        $concepto = $this->mconceptos->obtener($id);
+
+        if($concepto->co_clave!=$val && $this->mconceptos->validar_clave($val))
+        {
+            $this->form_validation->set_message('actualizarclave', 'Clave del concepto ya registrada, escriba otra por favor');
+            return FALSE;
+        }
+
+        return TRUE;                
     }
     // --------------------------------------------------------------------
 }

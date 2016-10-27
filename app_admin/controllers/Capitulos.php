@@ -66,7 +66,7 @@ class Capitulos extends CI_Controller
             $this->alerts->danger('capitulos',$this->alerts->db_404);
 
         // Validaciones de Formulario
-        $this->form_validation->set_rules('clave', 'Clave del capitulo', 'required|numeric|exact_length[4]');
+        $this->form_validation->set_rules('clave', 'Clave del capitulo', 'required|numeric|exact_length[4]|callback_actualizarclave['.$id.']');
         $this->form_validation->set_rules('descripcion', 'Descripcioón', 'required');
 
         if( $this->form_validation->run() && $this->input->post() )
@@ -120,19 +120,24 @@ class Capitulos extends CI_Controller
     // --------------------------------------------------------------------
     
     /**
-     * Valida si clave es unica
+     * Validar status al actualizar registro
      *
      * @param   Int
-     * @return  boolean
+     * @param   Int
+     * @return  Boolean
      */
-    public function validarclave($clave)
+    public function actualizarclave($val, $id)
     {
-        if($this->mcapitulos->validar_clave($clave))
+        //Obtenes el capitulo
+        $capitulo = $this->mcapitulos->obtener($id);
+
+        if($capitulo->ca_clave!=$val && $this->mcapitulos->validar_clave($val))
         {
-            $this->form_validation->set_message('validarclave', 'Clave de capítulo ya registrada, escriba otra por favor');
+            $this->form_validation->set_message('actualizarclave', 'Clave de capítulo ya registrada, escriba otra por favor');
             return FALSE;
         }
-        return TRUE; 
+
+        return TRUE;                
     }
     // --------------------------------------------------------------------
 }

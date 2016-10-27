@@ -88,6 +88,21 @@ class Mcapitulos extends CI_Model
         return ($num==0);
     }
     // --------------------------------------------------------------------
+    
+    /**
+     * Valida si existe un registro en la base de datos segun la clave
+     *
+     * @param   String
+     * @return  Boolean
+     */
+    public function validar_clave($clave)
+    {
+        $this->db->where('ca_clave',$clave);
+        $num = $this->db->get('Capitulos')->num_rows();
+
+        return ($num>0);
+    }
+    // --------------------------------------------------------------------
 }
 /* Final del archivo Mcapitulos.php 
  * Ubicacion: ./app_admin/models/Mcapitulos.php
