@@ -52,7 +52,7 @@ class Seguridad
 	}
 	// --------------------------------------------------------------------
 
-	public function Sii(){
+	/*public function Sii(){
 
 		if( !$this->CI->session->error_db ){
 
@@ -68,7 +68,7 @@ class Seguridad
 			$this->CI->session->unset_userdata('error_db');
 			$this->CI->alerts->_500('ERROR AL CONECTAR A LA BASE DE DATOS','NO SE PUDO ESTABLCER CONEXION CON LA BASE DE DATOS DEL SII, POR FAVOR INTENTELO MAS TARDE.');
 		}
-	}
+	}*/
 }
 /* Final del archivo Seguridad.php 
  * Ubicacion: ./hooks/Seguridad.php

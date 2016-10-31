@@ -73,7 +73,7 @@ class Instituciones extends CI_Controller
         if(!$id)
             $this->alerts->_403();
         //Validos la informacion
-        if($this->minstituciones->validar($id))
+        if($this->minstituciones->validar_id($id))
             $this->alerts->danger('instituciones',$this->alerts->db_404);
 
         // Validaciones de Formulario
@@ -118,7 +118,7 @@ class Instituciones extends CI_Controller
         if(!$id)
             $this->alerts->_403();
         //Validos la informacion
-        if($this->minstituciones->validar($id))
+        if($this->minstituciones->validar_id($id))
             $this->alerts->danger('instituciones',$this->alerts->db_404);
 
         //Validamos si la operacion de realizo con éxito

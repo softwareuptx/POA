@@ -45,7 +45,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th data-toggle="true">Unidad</th>
-                                        <th data-hide="phone, tablet">Responsable</th>
+                                        <th >Responsable</th>
                                         <th data-hide="phone, tablet">Institución</th>
                                         <th style="width: 80px;"></th>
                                     </tr>
@@ -91,10 +91,8 @@
                                         echo "<tr>";
                                         echo "<td>".($key+1)."</td>";
                                         echo "<td>".$unidad->uni_nombre."</td>";
-                                        echo "<td>".$unidad->u_nombre." ".$unidad->u_appaterno." ".$unidad->u_apmaterno."</td>";
-
+                                        echo "<td> <a href='".base_url('personas/info/'.$unidad->u_id)."' style='text-decoration: underline'>".$unidad->u_nombre." ".$unidad->u_appaterno." ".$unidad->u_apmaterno."</a></td>";
                                         echo "<td> <a href='".base_url('instituciones/editar/'.$unidad->in_id)."' style='text-decoration: underline'>".$unidad->in_nombre."</a></td>";
-
                                         echo '
                                         <td>
                                             <a href="'.base_url('unidades/editar/'.$unidad->uni_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fa fa-pencil-square-o"></i></a>

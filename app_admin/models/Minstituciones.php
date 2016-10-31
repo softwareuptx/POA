@@ -78,7 +78,7 @@ class Minstituciones extends CI_Model
      * @param   Int
      * @return  Boolean
      */
-    public function validar($id)
+    public function validar_id($id)
     {
         $this->db->where('in_id',(int)$id);
         $num = $this->db->get('Instituciones')->num_rows();

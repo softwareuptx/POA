@@ -58,24 +58,24 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="persona">Nombre del responsable<span class="text-danger">*</span></label>
-                                        <select class="form-control selectpicker" data-live-search="true"  id="persona" name="persona" data-style="btn-white">
+                                        <label for="responsable">Nombre del responsable<span class="text-danger">*</span></label>
+                                        <select class="form-control selectpicker" data-live-search="true"  id="responsable" name="responsable" data-style="btn-white">
                                             <?php
                                             foreach ($personas as $key => $persona){
-                                                echo '<option value="'.$persona->idpersonas.'" '.set_select('persona', $persona->idpersonas,FALSE,$unidad->u_refsii).'>'.$persona->nombre.' '.$persona->apellidopat.' '.$persona->apellidomat.'</option>';
+                                                echo '<option value="'.$persona->idpersonas.'" '.set_select('responsable', $persona->idpersonas,FALSE,$unidad->u_refsii).'>'.$persona->nombre.' '.$persona->apellidopat.' '.$persona->apellidomat.'</option>';
                                             }
                                             ?>
                                         </select>
-                                        <?=form_error('persona')?>
+                                        <?=form_error('responsable')?>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="unidad">Nombre de la Unidad<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="unidad" name="unidad" value="<?php if(set_value('unidad')==''){ echo $unidad->uni_nombre; }else{ echo set_value('unidad'); } ?>">
-                                        <?=form_error('unidad')?>
+                                        <label for="nombre">Nombre de la Unidad<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="nombre" name="nombre" value="<?php if(set_value('nombre')==''){ echo $unidad->uni_nombre; }else{ echo set_value('nombre'); } ?>">
+                                        <?=form_error('nombre')?>
                                     </div>
                                 </div>
                             </div>

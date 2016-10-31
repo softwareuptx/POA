@@ -10,7 +10,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Munidades extends CI_Model
 {   
-
     /**
      * Agrega un nuevo registro a la base de datos
      *
@@ -22,6 +21,7 @@ class Munidades extends CI_Model
         return $this->db->insert('Unidades',$data);
     }
     // --------------------------------------------------------------------    
+    
     /**
      * Actualiza la información de un determinado registro
      *
@@ -46,10 +46,10 @@ class Munidades extends CI_Model
     {
         $this->db->join('Usuarios','Usuarios.u_id=Unidades.uni_responsable');
         $this->db->where('uni_id',(int)$id);
-        $this->db->limit(1);
         return $this->db->get('Unidades')->row();
     }
     // --------------------------------------------------------------------
+    
     /**
      * Obtiene la lista de las unidades
      *
@@ -62,13 +62,14 @@ class Munidades extends CI_Model
         return $this->db->get('Unidades')->result();
     }
     // --------------------------------------------------------------------
+    
     /**
      * Valida si existe un registro en la base de datos
      *
      * @param   Int
      * @return  Boolean
      */
-    public function validar($id)
+    public function validar_id($id)
     {
         $this->db->where('uni_id',(int)$id);
         $num = $this->db->get('Unidades')->num_rows();
@@ -80,13 +81,39 @@ class Munidades extends CI_Model
     /**
      * Elimina un registro en especifico
      *
+     * @param   Object
+     * @return  Boolean
+     */
+    public function eliminar($unidad)
+    {   
+        $this->db->trans_start();
+            //Eliminamos Unidad de la base
+        $this->db->where('uni_id',(int)$unidad->uni_id);
+        $this->db->delete('Unidades');
+
+            //Eliminamos Usuario
+        $this->db->where('u_id',(int)$unidad->uni_responsable);
+        $this->db->delete('Usuarios');
+
+        $this->db->trans_complete();
+
+        return $this->db->trans_status();
+    }
+    // --------------------------------------------------------------------
+    
+    /**
+     * Elimina un usuario especifico de acuerdo a su numero de SII
+     *
      * @param   Int
      * @return  Boolean
      */
-    public function eliminar($id)
-    {
-        $this->db->where('uni_id',(int)$id);
-        return $this->db->delete('Unidades');
+    public function eliminar_usuario($numero)
+    {   
+
+            //Eliminamos Usuario
+        $this->db->where('u_id',$numero);
+        return $this->db->delete('Usuarios');
+
     }
     // --------------------------------------------------------------------
 }

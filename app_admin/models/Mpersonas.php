@@ -14,10 +14,23 @@ class Mpersonas extends CI_Model
     protected $sii;
     function __construct()
     {
-
         parent::__construct();
         $this->sii = $this->load->database('sii', TRUE);
     }
+
+    /**
+     * Obtiene un registro especifico
+     *
+     * @param   Int
+     * @return  Object
+     */
+    public function obtener_refsii($id)
+    {
+        $this->db->join('Usuarios','Usuarios.u_id=Unidades.uni_responsable');
+        $this->db->where("Usuarios.u_refsii", (int)$id);
+        return $this->db->get('Unidades')->row();
+    }
+    // --------------------------------------------------------------------
 
     /**
      * Agrega un nuevo registro en la tabla Usuarios a la base de datos
@@ -30,7 +43,8 @@ class Mpersonas extends CI_Model
         $this->db->insert('Usuarios',$data);
         return $this->db->insert_id();
     }
-    // --------------------------------------------------------------------    
+    // --------------------------------------------------------------------
+    
     /**
      * Actualiza la información de un determinado registro
      *
@@ -44,12 +58,13 @@ class Mpersonas extends CI_Model
         return $this->db->update("Usuarios", $data);
     }
     // --------------------------------------------------------------------
+    
     /**
      * Obtiene un registro especifico de usuarios del SII
      *
      * @return  list object
      */
-    public function obtener($id)
+    public function obtener_sii($id)
     {
         $this->sii->select('idpersonas,nombre,apellidopat,apellidomat,password,email');
         $this->sii->where("idpersonas", $id);
@@ -58,12 +73,13 @@ class Mpersonas extends CI_Model
         return $this->sii->get('persona')->row();
     }
     // --------------------------------------------------------------------
+    
     /**
      * Obtiene la lista de usuarios del SII
      *
      * @return  list object
      */
-    public function listar()
+    public function listar_sii()
     {
         $this->sii->select('idpersonas,nombre,apellidopat,apellidomat');
         $this->sii->where("admin", 1);
@@ -71,13 +87,14 @@ class Mpersonas extends CI_Model
         return $this->sii->get('persona')->result();
     }
     // --------------------------------------------------------------------
+    
     /**
      * Valida si existe un registro en la base de datos
      *
      * @param   Int
      * @return  Boolean
      */
-    public function validar($id)
+    public function validar_id($id)
     {
         $this->sii->select('idpersonas,nombre,apellidopat,apellidomat');
         $this->sii->where('idpersonas',(int)$id);
