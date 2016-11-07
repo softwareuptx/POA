@@ -30,6 +30,10 @@ class Unidades extends CI_Controller
      */
     public function agregar()
     {
+        //Validamos conexion al SII
+        conexion_sii();
+        $this->load->model('mpersonas');
+
         // Validaciones de Formulario
         $this->form_validation->set_rules('institucion', 'Nombre de la institución', 'required|callback_validarinstitucion');
         $this->form_validation->set_rules('nombre', 'Unidad', 'required|is_unique[Unidades.uni_nombre]');

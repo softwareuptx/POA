@@ -30,6 +30,10 @@ class Areas extends CI_Controller
      */
     public function agregar()
     {
+        //Validamos conexion al SII
+        conexion_sii();
+        $this->load->model('mpersonas');
+        
         // Validaciones de Formulario
         $this->form_validation->set_rules('nombre', 'Nombre del Área', 'required|is_unique[Areas.a_nombre]');
         $this->form_validation->set_rules('unidad', 'Nombre de la Unidad', 'required|callback_validarunidad');

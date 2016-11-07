@@ -36,6 +36,10 @@ class subareas extends CI_Controller
      */
     public function agregar()
     {
+        //Validamos conexion al SII
+        conexion_sii();
+        $this->load->model('mpersonas');
+        
         // Validaciones de Formulario
         $this->form_validation->set_rules('area', 'Nombre del área', 'required|callback_validararea');
         $this->form_validation->set_rules('nombre', 'Nombre de la Subárea', 'required|is_unique[SubAreas.sub_nombre]');
