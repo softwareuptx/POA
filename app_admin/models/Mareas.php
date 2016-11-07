@@ -46,7 +46,6 @@ class Mareas extends CI_Model
     {
         $this->db->join('Usuarios','Usuarios.u_id=Areas.a_director');
         $this->db->where('a_id',(int)$id);
-        $this->db->limit(1);
         return $this->db->get('Areas')->row();
     }
     // --------------------------------------------------------------------
@@ -69,7 +68,7 @@ class Mareas extends CI_Model
      * @param   Int
      * @return  Boolean
      */
-    public function validar($id)
+    public function validar_id($id)
     {
         $this->db->where('a_id',(int)$id);
         $num = $this->db->get('Areas')->num_rows();

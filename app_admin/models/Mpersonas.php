@@ -26,6 +26,49 @@ class Mpersonas extends CI_Model
      */
     public function obtener_refsii($id)
     {
+        //$this->db->join('Usuarios','Usuarios.u_id=Unidades.uni_responsable');
+        $this->db->where("u_refsii", (int)$id);
+        return $this->db->get('Usuarios')->row();
+    }
+    // --------------------------------------------------------------------
+    
+    /**
+     * Obtiene un usuario encargado de area
+     *
+     * @param   Int
+     * @return  Object
+     */
+    public function obtener_area($id)
+    {
+        $this->db->join('Usuarios','Usuarios.u_id=Areas.a_director');
+        $this->db->where("Usuarios.u_refsii", (int)$id);
+        return $this->db->get('Areas')->row();
+    }
+    // --------------------------------------------------------------------
+    
+    /**
+     * Obtiene un usuario encargado de una subarea
+     *
+     * @param   Int
+     * @return  Object
+     */
+    public function obtener_subarea($id)
+    {   
+        $this->db->join('Colaboradores','Colaboradores.co_subarea=SubAreas.sub_id');
+        $this->db->join('Usuarios','Usuarios.u_id=Colaboradores.co_usuario');
+        $this->db->where("Usuarios.u_refsii", (int)$id);
+        return $this->db->get('SubAreas')->row();
+    }
+    // --------------------------------------------------------------------
+    
+    /**
+     * Obtiene un usuario encargado de una unidad
+     *
+     * @param   Int
+     * @return  Object
+     */
+    public function obtener_unidad($id)
+    {
         $this->db->join('Usuarios','Usuarios.u_id=Unidades.uni_responsable');
         $this->db->where("Usuarios.u_refsii", (int)$id);
         return $this->db->get('Unidades')->row();

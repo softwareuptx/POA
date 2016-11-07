@@ -19,7 +19,7 @@ class Mcolaboradores extends CI_Model
      */
     public function agregar($data)
     {
-        $this->db->insert('Colaboradores',$data);
+        return $this->db->insert('Colaboradores',$data);
     }
     // --------------------------------------------------------------------    
     /**
@@ -29,9 +29,9 @@ class Mcolaboradores extends CI_Model
      * @param   Array
      * @return  Boolean
      */
-    public function editar($usuario, $subarea, $data)
+    public function editar($resposable, $subarea, $data)
     {
-        $this->db->where('co_usuario',(int)$usuario);
+        $this->db->where('co_usuario',(int)$resposable);
         $this->db->where('co_subarea',(int)$subarea);
         return $this->db->update('Colaboradores',$data);
     }
@@ -50,6 +50,22 @@ class Mcolaboradores extends CI_Model
         return $this->db->get('Colaboradores')->row();
     }
     // --------------------------------------------------------------------
+    
+    /**
+     * Obtiene el resposable de una subarea
+     *
+     * @param   Int
+     * @return  Object
+     */
+    public function obtener_responsable($id)
+    {
+        $this->db->join('Usuarios','Usuarios.u_id=Colaboradores.co_usuario');
+        $this->db->where('Colaboradores.co_subarea',(int)$id);
+        $this->db->where('Colaboradores.co_responsable',1);
+        return $this->db->get('Colaboradores')->row();
+    }
+    // --------------------------------------------------------------------
+    
     /**
      * Obtiene la lista de las subareas
      *

@@ -84,36 +84,10 @@ class Munidades extends CI_Model
      * @param   Object
      * @return  Boolean
      */
-    public function eliminar($unidad)
+    public function eliminar($id)
     {   
-        $this->db->trans_start();
-            //Eliminamos Unidad de la base
-        $this->db->where('uni_id',(int)$unidad->uni_id);
-        $this->db->delete('Unidades');
-
-            //Eliminamos Usuario
-        $this->db->where('u_id',(int)$unidad->uni_responsable);
-        $this->db->delete('Usuarios');
-
-        $this->db->trans_complete();
-
-        return $this->db->trans_status();
-    }
-    // --------------------------------------------------------------------
-    
-    /**
-     * Elimina un usuario especifico de acuerdo a su numero de SII
-     *
-     * @param   Int
-     * @return  Boolean
-     */
-    public function eliminar_usuario($numero)
-    {   
-
-            //Eliminamos Usuario
-        $this->db->where('u_id',$numero);
-        return $this->db->delete('Usuarios');
-
+        $this->db->where('uni_id',(int)$id);
+        return $this->db->delete('Unidades');
     }
     // --------------------------------------------------------------------
 }
