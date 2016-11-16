@@ -95,6 +95,10 @@ class Unidades extends CI_Controller
      */
     public function editar($id=NULL)
     {
+        //Validamos conexion al SII
+        conexion_sii();
+        $this->load->model('mpersonas');
+
         //Validamos id
         if(!$id)
             $this->alerts->_403();

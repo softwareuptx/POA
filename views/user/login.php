@@ -34,7 +34,11 @@
                                                 <label class="col-sm-4 control-label">Año</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control input-sm" name="periodo">
-                                                        <option value="1" <?=set_select('periodo', '1')?> >2014</option>
+                                                        <?php
+                                                        foreach ($periodos as $key => $periodo){
+                                                            echo '<option value="'.$periodo->p_id.'"'.set_select('periodo', $periodo->p_id).'>'.$periodo->etiqueta.'</option>';
+                                                        }
+                                                        ?>
                                                     </select>
                                                     <?=form_error('periodo')?>
                                                 </div>
@@ -42,17 +46,29 @@
                                             <div class="form-group">
                                                 <label class="col-sm-4 control-label">Unidad</label>
                                                 <div class="col-sm-8">
-                                                    <select class="form-control input-sm" name="unidad">
-                                                        <option value="1" <?=set_select('unidad', '1')?> >Secretaria Academica</option>
+                                                    <select class="form-control input-sm selectpicker" data-live-search="true" data-style="btn-white" id="unidad" name="unidad">
+                                                        <option></option>
+                                                        <?php
+                                                        foreach ($unidades as $key => $unidad){
+                                                            echo '<option value="'.$unidad->uni_id.'"'.set_select('unidad', $unidad->uni_id).'>'.$unidad->uni_nombre.'</option>';
+                                                        }
+                                                        ?>
                                                     </select>
                                                     <?=form_error('unidad')?>
                                                 </div>
                                             </div>
                                             <div class="form-group">
+                                                <label class="col-sm-4 control-label">Área</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control input-sm" data-live-search="true" id="area" name="area">
+                                                    </select>
+                                                    <?=form_error('area')?>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
                                                 <label class="col-sm-4 control-label">Responsable</label>
                                                 <div class="col-sm-8">
-                                                    <select class="form-control input-sm" name="responsable">
-                                                        <option value="1" <?=set_select('responsable', '1')?> >15782- Edwin Oscar Mendez Perez</option>
+                                                    <select class="form-control input-sm" data-live-search="true" id="responsable" name="responsable">
                                                     </select>
                                                     <?=form_error('responsable')?>
                                                 </div>
@@ -107,5 +123,49 @@
     <!-- ========== Base JS ========== -->
     <?=$this->load->view('includes/base_js','',TRUE)?>
     <!-- ========== /Base JS ========== -->
+    <script type="text/javascript">
+
+        jQuery(function($) {
+            unidad_id = $('#unidad').val();
+
+            if(unidad_id!='')
+            {
+                $.getJSON("<?=base_url('rest/getareas')?>/"+unidad_id)
+                .done(function( data ){
+                    $("#responsable").empty();
+                    $("#area").empty();
+                    $("#area").append('<option>Seleccione un área...</option>');
+                    $.each(data, function(id,area){
+                        $("#area").append('<option value="'+area.a_id+'">'+area.a_nombre+'sd</option>');
+                    });
+                });
+            } 
+        });
+        //Funcion para sacar lista de areas
+        $('#unidad').on('change', function(){
+            unidad_id = $(this).find(":selected").val();
+            $.getJSON("<?=base_url('rest/getareas')?>/"+unidad_id)
+            .done(function( data ){
+                $("#responsable").empty();
+                $("#area").empty();
+                $("#area").append('<option>Seleccione un área...</option>');
+                $.each(data, function(id,area){
+                    $("#area").append('<option value="'+area.a_id+'">'+area.a_nombre+'</option>');
+                });
+            });
+        });
+
+        //Funcion para sacar lista de usuarios
+        $('#area').on('change', function(){
+            area_id = $(this).find(":selected").val();
+            $.getJSON("<?=base_url('rest/getpersonas')?>/"+area_id)
+            .done(function( data ){
+                $("#responsable").empty();
+                $.each(data, function(id,responsable){
+                    $("#responsable").append('<option value="'+responsable.u_id+'">'+responsable.u_refsii+'-'+responsable.u_nombre+' '+responsable.u_appaterno+' '+responsable.u_apmaterno+'</option>');
+                });
+            });
+        });
+    </script>
 </body>
 </html>

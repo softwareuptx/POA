@@ -42,7 +42,7 @@ class Seguridad
 		//Obtenes el metodo la cual se esta accesando
 		$metodo 		= $this->CI->router->method;
 		//Declaramos las rutas permitidas
-		$controllers 	= array('login');
+		$controllers 	= array('login','rest');
 
 
 		if($this->CI->session->userdata('logged') && $controller=='login')

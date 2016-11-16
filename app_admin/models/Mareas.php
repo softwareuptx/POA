@@ -22,6 +22,7 @@ class Mareas extends CI_Model
         return $this->db->insert('Areas',$data);
     }
     // --------------------------------------------------------------------    
+    
     /**
      * Actualiza la información de un determinado registro
      *

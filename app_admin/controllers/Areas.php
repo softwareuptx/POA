@@ -95,6 +95,10 @@ class Areas extends CI_Controller
      */
     public function editar($id=NULL)
     {
+        //Validamos conexion al SII
+        conexion_sii();
+        $this->load->model('mpersonas');
+        
         //Validamos id
         if(!$id)
             $this->alerts->_403();
@@ -193,6 +197,7 @@ class Areas extends CI_Controller
         }
     }
     // --------------------------------------------------------------------
+    
     /**
      * Valida la unidad
      *
@@ -209,6 +214,7 @@ class Areas extends CI_Controller
         return TRUE; 
     }
     // --------------------------------------------------------------------
+    
     /**
      * Valida la persona
      *

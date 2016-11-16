@@ -23,3 +23,12 @@
 		
 <!--FooTable Example-->
 <script src="<?=pages('jquery.footable.js')?>"></script>
+
+<script src="<?=plugins('bootstrap-select/dist/js/bootstrap-select.min.js')?>"></script>
+<script src="<?=plugins('autoNumeric/autoNumeric.js')?>"></script>
+
+<script src="<?=plugins('timepicker/bootstrap-timepicker.min.js')?>"></script>
+<script src="<?=plugins('mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')?>"></script>
+<script src="<?=plugins('bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')?>"></script>
+<script src="<?=js('idiomadate.js')?>" charset="UTF-8"></script>
+<script src="<?=plugins('bootstrap-maxlength/bootstrap-maxlength.min.js')?>" charset="UTF-8"></script>
