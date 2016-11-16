@@ -45,10 +45,8 @@ class Msubareas extends CI_Model
      */
     public function obtener($id)
     {
-        $this->db->join('Colaboradores','Colaboradores.co_subarea=SubAreas.sub_id');
-        $this->db->join('Usuarios','Usuarios.u_id=Colaboradores.co_usuario');
-        $this->db->where('sub_id',(int)$id);
-        $this->db->limit(1);
+        $this->db->join('Areas','Areas.a_id=SubAreas.sub_area');
+        $this->db->where('SubAreas.sub_id',(int)$id);
         return $this->db->get('SubAreas')->row();
     }
     // --------------------------------------------------------------------
@@ -59,12 +57,8 @@ class Msubareas extends CI_Model
      */
     public function listar()
     {
-        $this->db->join('Instituciones','Instituciones.in_id=Unidades.uni_institucion');
-        $this->db->join('Areas','Areas.a_unidad=Unidades.uni_id');
-        $this->db->join('SubAreas','SubAreas.sub_area=Areas.a_id');
-        $this->db->join('Colaboradores','Colaboradores.co_subarea=SubAreas.sub_id');
-        $this->db->join('Usuarios','Usuarios.u_id=Colaboradores.co_usuario');
-        return $this->db->get('Unidades')->result();
+        $this->db->join('Areas','Areas.a_id=SubAreas.sub_area');
+        return $this->db->get('SubAreas')->result();
     }
     // --------------------------------------------------------------------
     /**
@@ -73,7 +67,7 @@ class Msubareas extends CI_Model
      * @param   Int
      * @return  Boolean
      */
-    public function validar($id)
+    public function validar_id($id)
     {
         $this->db->where('sub_id',(int)$id);
         $num = $this->db->get('SubAreas')->num_rows();

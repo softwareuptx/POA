@@ -231,3 +231,26 @@ if ( ! function_exists('title') )
 	}
 }
 // --------------------------------------------------------------------
+
+/**
+* Verifica la conexion al SII
+*
+* @return  	Void
+*/
+if ( ! function_exists('conexion_sii') )
+{
+	function conexion_sii(){
+
+		//Librerias
+		$CI = &get_instance();
+		$CI->load->helper('url');
+		
+		$sii = $CI->load->database('sii', TRUE)->initialize();
+
+		if(!$sii)
+		{	
+			redirect('errors/db_sii');
+		}
+	}
+}
+// --------------------------------------------------------------------

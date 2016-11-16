@@ -30,35 +30,48 @@ class Unidades extends CI_Controller
      */
     public function agregar()
     {
+        //Validamos conexion al SII
+        conexion_sii();
+        $this->load->model('mpersonas');
+
         // Validaciones de Formulario
         $this->form_validation->set_rules('institucion', 'Nombre de la institución', 'required|callback_validarinstitucion');
-        $this->form_validation->set_rules('unidad', 'Nombre de la Unidad', 'required');
-        $this->form_validation->set_rules('persona', 'Nombre del responsable', 'required|callback_validarpersona');
+        $this->form_validation->set_rules('nombre', 'Unidad', 'required|is_unique[Unidades.uni_nombre]');
+        $this->form_validation->set_rules('responsable', 'Responsable', 'required|callback_validarpersona|callback_validarresponsable');
 
         if( $this->form_validation->run() && $this->input->post() )
         {   
-            $personas = $this->input->post('persona');
+            $responsable = $this->input->post('responsable');
 
-            $persona = $this->mpersonas->obtener($personas);
+            //Si existe el usuario obtenes de la tabla
+            if( $persona = $this->mpersonas->obtener_refsii($responsable))
+            {
+                $idpersona = $persona->u_id;
+            }
+            else
+            {   
+                //Si no existe el usuario obtenemos del SII e insertamos en la tabla
+                $persona = $this->mpersonas->obtener_sii($responsable);
+                //Preparamos la información para insertar en la tabla usuarios
+                $data_persona = array(
+                    'u_refsii'      => $persona->idpersonas,
+                    'u_institucion' => $this->input->post('institucion',TRUE),
+                    'u_nombre'      => $persona->nombre,
+                    'u_appaterno'   => $persona->apellidopat,
+                    'u_apmaterno'   => $persona->apellidomat,
+                    'u_password'    => $persona->password,
+                    'u_email'       => $persona->email,
+                    'u_create'      => date('Y:m:d')
+                    );
 
-            //Preparamos la información para insertar en la tabla usuarios
-            $data_persona = array(
-                'u_refsii'      => $persona->idpersonas,
-                'u_institucion' => $this->input->post('institucion',TRUE),
-                'u_nombre'      => $persona->nombre,
-                'u_appaterno'   => $persona->apellidopat,
-                'u_apmaterno'   => $persona->apellidomat,
-                'u_password'    => $persona->password,
-                'u_create'      => date('Y:m:d')
-                );
-
-            //Agregamos la información en la tabla usuarios
-            $idpersona = $this->mpersonas->agregar($data_persona);
+                //Agregamos la información en la tabla usuarios
+                $idpersona = $this->mpersonas->agregar($data_persona);
+            }
 
             //Preparamos la información para insertar
             $data_unidades = array(
                 'uni_institucion' => $this->input->post('institucion',TRUE),
-                'uni_nombre'      => $this->input->post('unidad',TRUE),
+                'uni_nombre'      => $this->input->post('nombre',TRUE),
                 'uni_responsable' => $idpersona,
                 'uni_create'      => date('Y:m:d')
                 );
@@ -67,8 +80,7 @@ class Unidades extends CI_Controller
             $this->alerts->success('unidades');
         }
 
-        $data['personas']        = $this->mpersonas->listar();
-
+        $data['personas']        = $this->mpersonas->listar_sii();
         $data['instituciones']   = $this->minstituciones->listar();
         
         $this->load->view('unidades/agregar',$data);
@@ -83,43 +95,62 @@ class Unidades extends CI_Controller
      */
     public function editar($id=NULL)
     {
+        //Validamos conexion al SII
+        conexion_sii();
+        $this->load->model('mpersonas');
+
         //Validamos id
         if(!$id)
             $this->alerts->_403();
         //Validos la informacion
-        if($this->munidades->validar($id))
+        if($this->munidades->validar_id($id))
             $this->alerts->danger('unidades',$this->alerts->db_404);
 
         // Validaciones de Formulario
         $this->form_validation->set_rules('institucion', 'Nombre de la institución', 'required|callback_validarinstitucion');
-        $this->form_validation->set_rules('unidad', 'Nombre de la Unidad', 'required');
-        $this->form_validation->set_rules('persona', 'Nombre del responsable', 'required|callback_validarpersona');
+        $this->form_validation->set_rules('nombre', 'Nombre de la Unidad', 'required');
+        $this->form_validation->set_rules('responsable', 'Nombre del responsable', 'required|callback_validarpersona|callback_validares['.$id.']');
 
         if( $this->form_validation->run() && $this->input->post() )
         {   
+            $responsable  = $this->input->post('responsable');
 
-            $personas = $this->input->post('persona');
+            //Si el responsable es diferente isnertammos una nueva persona
+            if($this->munidades->obtener($id)->u_refsii!=$responsable){
 
-            $persona = $this->mpersonas->obtener($personas);
+                //Si existe el usuario obtenes de la tabla
+                if( $persona = $this->mpersonas->obtener_refsii($responsable))
+                {
+                    $idpersona = $persona->u_id;
+                }
+                else
+                {
+                    //Obtenemos al responsable si es diferente
+                    $persona = $this->mpersonas->obtener_sii($responsable);
 
-            //Preparamos la información para insertar en la tabla usuarios
-            $data_persona = array(
-                'u_refsii'      => $persona->idpersonas,
-                'u_institucion' => $this->input->post('institucion',TRUE),
-                'u_nombre'      => $persona->nombre,
-                'u_appaterno'   => $persona->apellidopat,
-                'u_apmaterno'   => $persona->apellidomat,
-                'u_password'    => $persona->password,
-                'u_create'      => date('Y:m:d')
-                );
+                    //Preparamos la información para insertar en la tabla usuarios
+                    $data_persona = array(
+                        'u_refsii'      => $persona->idpersonas,
+                        'u_institucion' => $this->input->post('institucion',TRUE),
+                        'u_nombre'      => $persona->nombre,
+                        'u_appaterno'   => $persona->apellidopat,
+                        'u_apmaterno'   => $persona->apellidomat,
+                        'u_email'       => $persona->email,
+                        'u_password'    => $persona->password,
+                        'u_create'      => date('Y:m:d')
+                        );
+                    //Agregamos la información en la tabla usuarios
+                    $idpersona = $this->mpersonas->agregar($data_persona);
+                }
+            }
+            else
+            {
+                $idpersona = $this->mpersonas->obtener_refsii($responsable)->u_id;     
+            }
 
-            //Agregamos la información en la tabla usuarios
-            $idpersona = $this->mpersonas->agregar($data_persona);
-
-            //Preparamos la información para insertar
             $data_unidad = array(
                 'uni_institucion' => $this->input->post('institucion',TRUE),
-                'uni_nombre'      => $this->input->post('unidad',TRUE),
+                'uni_nombre'      => $this->input->post('nombre',TRUE),
                 'uni_responsable' => $idpersona,
                 'uni_update'      => date('Y:m:d')
                 );
@@ -128,11 +159,9 @@ class Unidades extends CI_Controller
             $this->alerts->success('unidades');
         }
 
-        $data['personas']        = $this->mpersonas->listar();
-
-        $data['instituciones']   = $this->minstituciones->listar();
-
-        $data['unidad']        = $this->munidades->obtener($id);
+        $data['personas']       = $this->mpersonas->listar_sii();
+        $data['instituciones']  = $this->minstituciones->listar();
+        $data['unidad']         = $this->munidades->obtener($id);
 
         $this->load->view('unidades/editar',$data);
     }
@@ -150,7 +179,7 @@ class Unidades extends CI_Controller
         if(!$id)
             $this->alerts->_403();
         //Validos la informacion
-        if($this->munidades->validar($id))
+        if($this->munidades->validar_id($id))
             $this->alerts->danger('unidades',$this->alerts->db_404);
 
         //Validamos si la operacion de realizo con éxito
@@ -169,6 +198,45 @@ class Unidades extends CI_Controller
         }
     }
     // --------------------------------------------------------------------
+    
+    /**
+     * Valida si la persona ya tiene una unidad a su cargo
+     *
+     * @param   Int
+     * @return  boolean
+     */
+    public function validarresponsable($id)
+    {
+        if($this->mpersonas->obtener_unidad($id))
+        {
+            $this->form_validation->set_message('validarresponsable', 'Esta persona ya tiene una unidad a su cargo, por favor selecione otro responsable');
+            return FALSE;
+        }
+        return TRUE; 
+    }
+    // --------------------------------------------------------------------
+    
+    /**
+     * Valida si la persona ya tiene una unidad a su cargo cuando se esa modificando
+     *
+     * @param   Int
+     * @return  boolean
+     */
+    public function validares($responsable_id,$unidad_id)
+    {
+        if($this->munidades->obtener($unidad_id)->u_refsii!=$responsable_id)
+        {
+            if($this->mpersonas->obtener_unidad($responsable_id))
+            {
+                $this->form_validation->set_message('validares', 'Esta persona ya tiene una unidad a su cargo, por favor selecione otro responsable');
+                return FALSE;
+            }
+            return TRUE;
+        }
+        return TRUE; 
+    }
+    // --------------------------------------------------------------------
+    
     /**
      * Valida la institución
      *
@@ -177,7 +245,7 @@ class Unidades extends CI_Controller
      */
     public function validarinstitucion($id)
     {
-        if($this->minstituciones->validar($id))
+        if($this->minstituciones->validar_id($id))
         {
             $this->form_validation->set_message('validarinstitucion', 'Seleccione una institución valida por favor');
             return FALSE;
@@ -185,6 +253,7 @@ class Unidades extends CI_Controller
         return TRUE; 
     }
     // --------------------------------------------------------------------
+    
     /**
      * Valida la persona
      *
@@ -193,7 +262,7 @@ class Unidades extends CI_Controller
      */
     public function validarpersona($id)
     {
-        if($this->mpersonas->validar($id))
+        if($this->mpersonas->validar_id($id))
         {
             $this->form_validation->set_message('validarpersona', 'Seleccione un usuario valido por favor');
             return FALSE;

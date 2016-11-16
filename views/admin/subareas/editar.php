@@ -62,7 +62,7 @@
                                         <select class="form-control selectpicker" data-live-search="true"  id="persona" name="persona" data-style="btn-white">
                                             <?php
                                             foreach ($personas as $key => $persona){
-                                                echo '<option value="'.$persona->idpersonas.'" '.set_select('persona', $persona->idpersonas,FALSE,$subarea->u_refsii).'>'.$persona->nombre.' '.$persona->apellidopat.' '.$persona->apellidomat.'</option>';
+                                                echo '<option value="'.$persona->idpersonas.'" '.set_select('persona', $persona->idpersonas,FALSE,$subarea->responsable->u_refsii).'>'.$persona->nombre.' '.$persona->apellidopat.' '.$persona->apellidomat.'</option>';
                                             }
                                             ?>
                                         </select>
@@ -73,19 +73,9 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="unidad">Nombre de la Subárea<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="subarea" name="subarea" value="<?php if(set_value('subarea')==''){ echo $subarea->sub_nombre; }else{ echo set_value('subarea'); } ?>">
-                                        <?=form_error('subarea')?>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="persona">Colaborador<span class="text-danger">*</span></label>
-                                        <select class="form-control selectpicker" data-live-search="true"  id="colaborador" name="colaborador" data-style="btn-white">
-                                          <option value="1" <?=set_select('tipo', '1',FALSE,$colaboradores->co_responsable)?>>Si</option>
-                                          <option value="2" <?=set_select('tipo', '2',FALSE,$colaboradores->co_responsable)?>>No</option>
-                                        </select>
-                                        <?=form_error('colaborador')?>
+                                        <label for="nombre">Nombre de la Subárea<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="nombre" name="nombre" value="<?php if(set_value('nombre')==''){ echo $subarea->sub_nombre; }else{ echo set_value('nombre'); } ?>">
+                                        <?=form_error('nombre')?>
                                     </div>
                                 </div>
                             </div>

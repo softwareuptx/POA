@@ -14,22 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $hook['post_controller_constructor'][] = array(
                                 'class'    => 'Seguridad',
-                                'function' => 'Sii',
-                                'filename' => 'Seguridad.php',
-                                'filepath' => '././hooks'
-                                );
-
-
-$hook['post_controller_constructor'][] = array(
-                                'class'    => 'Seguridad',
                                 'function' => 'logged',
                                 'filename' => 'Seguridad.php',
-                                'filepath' => '././hooks'
-                                );
-
-$hook['post_controller_constructor'][] = array(
-                                'class'    => 'Seguridad',
-                                'function' => 'User',
-                                'filename' => 'Seguridad.php',
-                                'filepath' => '././hooks'
+                                'filepath' => '../hooks'
                                 );

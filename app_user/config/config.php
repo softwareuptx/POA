@@ -77,7 +77,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'english';
+$config['language']	= 'es';
 
 /*
 |--------------------------------------------------------------------------
@@ -369,7 +369,7 @@ $config['encryption_key'] = 'dAFTqgHENlmdh66qKAsreAJO3tTmLeSj';
 |
 */
 $config['sess_driver'] = 'files';
-$config['sess_cookie_name'] = 'tutorias_sess';
+$config['sess_cookie_name'] = 'poa_sess';
 $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = NULL;
 $config['sess_match_ip'] = FALSE;
@@ -440,8 +440,8 @@ $config['global_xss_filtering'] = TRUE;
 | 'csrf_exclude_uris' = Array of URIs which ignore CSRF checks
 */
 $config['csrf_protection'] = TRUE;
-$config['csrf_token_name'] = 'tutorias_token';
-$config['csrf_cookie_name'] = 'tutorias_cookie';
+$config['csrf_token_name'] = 'poa_token';
+$config['csrf_cookie_name'] = 'poa_cookie';
 $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = FALSE;
 $config['csrf_exclude_uris'] = array();

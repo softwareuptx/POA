@@ -36,7 +36,7 @@ class Mlogin extends CI_Model
 
         //Validamos contraseña
         if ( strcasecmp(md5($password),$usuario->u_password)!=0 )
-            $this->alerts->danger('Contraseña incorrecta.','login');
+            $this->alerts->danger('login','Contraseña incorrecta.');
 
         //Creamos la session de usuario
         $this->crear_sesion($usuario,$periodo);

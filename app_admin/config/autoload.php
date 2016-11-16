@@ -127,4 +127,3 @@ $autoload['language'] = array();
 |	$autoload['model'] = array('first_model' => 'first');
 */
 $autoload['model'] = array('mlogin','minstituciones','munidades','mcapitulos','mconceptos','mpartidas','mperiodos','mpersonas','mareas','msubareas','mcolaboradores','mrevisiones','mevaluaciones');
-

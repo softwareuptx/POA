@@ -44,10 +44,9 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th data-toggle="true">Área</th>
+                                        <th >Responsable</th>
                                         <th data-hide="phone, tablet">Unidad</th>
-                                        <th data-toggle="true">Area</th>
-                                        <th>Responsable</th>
-                                        <th data-hide="phone, tablet">Institución</th>
                                         <th style="width: 80px;"></th>
                                     </tr>
                                 </thead>
@@ -91,10 +90,9 @@
                                     foreach ($areas as $key => $area){
                                         echo "<tr>";
                                         echo "<td>".($key+1)."</td>";
-                                        echo "<td><a href='".base_url('unidades/editar/'.$area->uni_id)."'>".$area->uni_nombre."</td>";
                                         echo "<td>".$area->a_nombre."</td>";
-                                        echo "<td>".$area->u_nombre." ".$area->u_appaterno." ".$area->u_apmaterno."</td>";
-                                        echo "<td><a href='".base_url('instituciones/editar/'.$area->in_id)."'>".$area->in_nombre."</a></td>";
+                                        echo "<td> <a href='".base_url('personas/info/'.$area->u_id)."' style='text-decoration: underline'>".$area->u_nombre." ".$area->u_appaterno." ".$area->u_apmaterno."</a></td>";
+                                        echo "<td><a href='".base_url('unidades/editar/'.$area->uni_id)."' style='text-decoration: underline'>".$area->uni_nombre."</td>";
                                         echo '
                                         <td>
                                             <a href="'.base_url('areas/editar/'.$area->a_id).'" class="table-action-btn" data-toggle="tooltip" data-placement="top" title="Editar registro"><i class="fa fa-pencil-square-o"></i></a>

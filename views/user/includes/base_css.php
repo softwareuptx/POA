@@ -5,7 +5,7 @@
   <link href="<?=css('pages.css')?>" rel="stylesheet" type="text/css" />
   <link href="<?=css('responsive.css')?>" rel="stylesheet" type="text/css" />
 
-  <link href="<?=plugins('bootstrapvalidator/src/css/bootstrapValidator.css')?>" rel="stylesheet" type="text/css" />
+  <link href="<?=plugins('bootstrap-select/dist/css/bootstrap-select.min.css')?>" rel="stylesheet" type="text/css" />
 
   <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

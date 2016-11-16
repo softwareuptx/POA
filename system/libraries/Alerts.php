@@ -139,6 +139,9 @@ class CI_Alerts {
 		//Validamos texto del error
 		$texto = $texto != ''? $texto : 'EL RECURSO SOLOCITADO NO FUE ENCONTRADO '; 
 
+		if($url!=NULL)
+			$texto.= '<p><a href="'.$url.'" class="btn btn-default"> Puedes volver a '.$url.'</a></p>';
+
 		//Mandamos el error
 		show_error($texto, 404, $titulo);
 	}
@@ -151,6 +154,9 @@ class CI_Alerts {
 
 		//Validamos texto del error
 		$texto = $texto != ''? $texto : 'NO TIENE PERMISOS PARA ACCEDER A ESTA PARTE DEL SISTEMA '; 
+
+		if($url!=NULL)
+			$texto.= '<p><a href="'.$url.'" class="btn btn-default"> Puedes volver a '.$url.'</a></p>';
 
 		//Mandamos el error
 		show_error($texto, 403, $titulo);
@@ -165,6 +171,9 @@ class CI_Alerts {
 		//Validamos texto del error
 		$texto = $texto != ''? $texto : 'SE A PRESENTADO UN CONFLICTO AL PROCESAR LA INFORMACIÓN SOLICITADA'; 
 
+		if($url!=NULL)
+			$texto.= '<p><a href="'.$url.'" class="btn btn-default"> Puedes volver a '.$url.'</a></p>';
+
 		//Mandamos el error
 		show_error($texto, 409, $titulo);
 	}
@@ -178,6 +187,9 @@ class CI_Alerts {
 
 		//Validamos texto del error
 		$texto = $texto != ''? $texto : 'SE A PRESENTADO UN ERROR EN EL SERVIDOR'; 
+
+		if($url!=NULL)
+			$texto.= '<p><a href="'.$url.'" class="btn btn-default"> Puedes volver a '.$url.'</a></p>';
 
 		//Mandamos el error
 		show_error($texto, 500, $titulo);
