@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * @author Oficina de Desarrollo de Software / Universidad Politecnica de Tlaxcala
  */
-class subareas extends CI_Controller
+class Subareas extends CI_Controller
 {
     /**
      * Muestra el listado de unidades
@@ -241,6 +241,6 @@ class subareas extends CI_Controller
     }
     // --------------------------------------------------------------------
 }
-/* Final del archivo Unidades.php 
- * Ubicacion: ./app_admin/controllers/Unidades.php
+/* Final del archivo Subareas.php 
+ * Ubicacion: ./app_admin/controllers/Subareas.php
  */

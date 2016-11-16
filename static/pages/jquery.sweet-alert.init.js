@@ -31,15 +31,34 @@
     //Warning Message
     $('#sa-warning').click(function(){
         swal({   
-            title: "Are you sure?",   
-            text: "You will not be able to recover this imaginary file!",   
+            title: "¿Estas seguro de aprobar este objetivo?",   
+            text: "El objetivo será aprobado y no aparecerá nuevamente en la lista de revisiones",   
             type: "warning",   
             showCancelButton: true,   
-            confirmButtonColor: "#DD6B55",   
-            confirmButtonText: "Yes, delete it!",   
+            confirmButtonColor: "#DD6B55",
+            cancelButtonColor: "#FF0000",   
+            confirmButtonText: "Aprobar",
+            cancelButtonText: "Cancelar",   
             closeOnConfirm: false 
         }, function(){   
-            swal("Deleted!", "Your imaginary file has been deleted.", "success"); 
+            swal("Aprobado!", "El objetivo ha sido aprobado con éxito.", "success"); 
+        });
+    });
+
+    //Warning Message
+    $('#sa-warning2').click(function(){
+        swal({   
+            title: "¿Estas seguro de no aprobar este objetivo?",   
+            text: "El objetivo no será aprobado y volverá a aparecer nuevamente en la lista de revisiones cuando se encuentre disponible",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",
+            cancelButtonColor: "#FF0000",   
+            confirmButtonText: "No Aprobar",
+            cancelButtonText: "Cancelar",   
+            closeOnConfirm: false 
+        }, function(){   
+            swal("No aprobado!", "El objetivo ha sido desaprobado con éxito.", "success"); 
         });
     });
 

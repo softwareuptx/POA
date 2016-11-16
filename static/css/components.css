@@ -1568,6 +1568,19 @@ div.dataTables_info {
   color: #2A54A2;
   border-color: #2A54A2;
 }
+.table-actions-bar .table-action-btn2 {
+  color: #98a6ad;
+  display: inline-block;
+  width: 30px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 28px;
+  font-size: 23px;
+}
+.table-actions-bar .table-action-btn2:hover {
+  color: #2A54A2;
+  border-color: #2A54A2;
+}
 /* Transaction */
 .transaction-list li {
   padding: 7px 0px;

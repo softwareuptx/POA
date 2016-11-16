@@ -497,7 +497,10 @@ File: Bootstrap-custom
 }
 /* Text colors */
 .text-custom {
-  color: #5fbeaa;
+  color: green;
+}
+.text-default {
+  color: white;
 }
 .text-white {
   color: #ffffff;

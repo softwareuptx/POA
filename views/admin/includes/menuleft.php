@@ -39,6 +39,12 @@
                 <li>
                     <a href="<?=base_url('partidas')?>" class="waves-effect <?=menu('partidas')?>"><i class="fa fa-flag"></i> <span>Partidas</span></a>
                 </li>
+                <li>
+                    <a href="<?=base_url('revisiones')?>" class="waves-effect <?=menu('revisiones')?>"><i class="fa fa-edit"></i> <span>Revisiones</span></a>
+                </li>
+                <li>
+                    <a href="<?=base_url('evaluaciones')?>" class="waves-effect <?=menu('evaluaciones')?>"><i class="fa fa-check-square-o"></i> <span>Evaluaciones</span></a>
+                </li>
             </ul>
             <div class="clearfix"></div>
         </div>

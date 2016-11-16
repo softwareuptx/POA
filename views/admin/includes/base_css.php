@@ -4,6 +4,7 @@
   <link href="<?=css('icons.css')?>" rel="stylesheet" type="text/css" />
   <link href="<?=css('pages.css')?>" rel="stylesheet" type="text/css" />
   <link href="<?=css('responsive.css')?>" rel="stylesheet" type="text/css" />
+  <link href="<?=css('sweetalert.css')?>" rel="stylesheet" type="text/css" />
 
   <link href="<?=plugins('bootstrap-select/dist/css/bootstrap-select.min.css')?>" rel="stylesheet" type="text/css" />
 

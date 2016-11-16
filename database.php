@@ -95,7 +95,29 @@ $db['default'] = array(
 	'save_queries' => TRUE
 );
 
-$db['sii'] = array(
+ $db['sii'] = array(
+	'dsn'	=> '',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '1234',
+	'database' => 'db_poa',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => FALSE,
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+); 
+
+/*$db['sii'] = array(
 	'dsn'	=> '',
 	'hostname' => '172.10.40.12',
 	'username' => 'SGC',
@@ -115,4 +137,4 @@ $db['sii'] = array(
 	'stricton' => FALSE,
 	'failover' => array(),
 	'save_queries' => TRUE
-);
+); */
